@@ -11,16 +11,16 @@ import org.springframework.context.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.taller4.dao.implementation.*;
-import com.taller4.model.person.*;
-import com.taller4.model.prod.*;
-import com.taller4.model.sales.*;
-import com.taller4.repository.*;
-import com.taller4.service.implementation.*;
+import com.taller4.backend.dao.implementation.*;
+import com.taller4.backend.model.person.*;
+import com.taller4.backend.model.prod.*;
+import com.taller4.backend.model.sales.*;
+import com.taller4.backend.repository.*;
+import com.taller4.backend.service.implementation.*;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"com.taller4.security","com.taller4.model"})
-@ComponentScan(basePackages = {"com.taller4.security","com.taller4.repository","com.taller4.dao.implementation","com.taller4.service.implementation","com.taller4.controller"})
+@EntityScan(basePackages = {"com.taller4.backend.security","com.taller4.backend.model"})
+@ComponentScan(basePackages = {"com.taller4.backend.security","com.taller4.backend.repository","com.taller4.backend.dao.implementation","com.taller4.backend.service.implementation","com.taller4.backend.controller"})
 public class Taller4MsApplication {
 
 	public static void main(String[] args) {

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.taller4.model.person.UserApp;
-import com.taller4.model.person.UserApp.addValidator;
-import com.taller4.model.person.UserApp.updateValidator;
-import com.taller4.service.implementation.UserServiceImpl;
+import com.taller4.backend.model.person.*;
+import com.taller4.backend.model.person.UserApp.addValidator;
+import com.taller4.backend.model.person.UserApp.updateValidator;
+import com.taller4.backend.service.implementation.UserServiceImpl;
 
 @Controller
 public class UserControllerImpl {

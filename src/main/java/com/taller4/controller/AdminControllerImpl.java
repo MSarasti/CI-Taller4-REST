@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.taller4.model.prod.*;
-import com.taller4.model.validation.*;
-import com.taller4.service.implementation.ProductServiceImpl;
+import com.taller4.backend.model.prod.*;
+import com.taller4.backend.model.validation.*;
+import com.taller4.backend.service.implementation.ProductServiceImpl;
 
 @Controller
 public class AdminControllerImpl {
