@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.*;
 
-import com.taller4.model.validation.addValidation;
+import com.taller4.backend.model.validation.*;
 
 import lombok.Data;
 

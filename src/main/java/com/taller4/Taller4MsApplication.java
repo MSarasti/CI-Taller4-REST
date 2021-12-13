@@ -24,10 +24,14 @@ import com.taller4.backend.service.implementation.*;
 public class Taller4MsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Taller4MsApplication.class, args);
-		/*ConfigurableApplicationContext c = SpringApplication.run(Taller3MsApplication.class, args);
+		/*SpringApplication.run(Taller4MsApplication.class, args);*/
+		ConfigurableApplicationContext c = SpringApplication.run(Taller4MsApplication.class, args);
 		UserServiceImpl userService = c.getBean(UserServiceImpl.class);
 		ProductServiceImpl pService = c.getBean(ProductServiceImpl.class);
+		SpecialOfferServiceImpl soService = c.getBean(SpecialOfferServiceImpl.class);
+		SpecialOfferProductServiceImpl sopService = c.getBean(SpecialOfferProductServiceImpl.class);
+		SalesOrderDetailServiceImpl sodService = c.getBean(SalesOrderDetailServiceImpl.class);
+		
 		UserApp user1 = new UserApp();
 		user1.setUsername("Simba1");
 		user1.setPassword("{noop}Simba1234");
@@ -57,9 +61,57 @@ public class Taller4MsApplication {
 		pService.saveProductCategory(pc);
 		pService.saveProductSubcategory(psc);
 		pService.saveUnitmeasure(um1);
-		pService.saveUnitmeasure(um2);*/
+		pService.saveUnitmeasure(um2);
+		
+		Product p1 = new Product();
+		p1.setName("Porkchop");
+		p1.setDaystomanufacture(360);
+		p1.setProductnumber("1");
+		p1.setSellstartdate(LocalDate.now());
+		p1.setSellenddate(LocalDate.now().plusWeeks(4));
+		p1.setProductsubcategory(psc);
+		p1.setUnitmeasure1(um1);
+		p1.setUnitmeasure2(um2);
+		
+		Product p2 = new Product();
+		p2.setName("Beef");
+		p2.setDaystomanufacture(360);
+		p2.setProductnumber("2");
+		p2.setSellstartdate(LocalDate.now());
+		p2.setSellenddate(LocalDate.now().plusWeeks(3));
+		p2.setProductsubcategory(psc);
+		p2.setUnitmeasure1(um1);
+		p2.setUnitmeasure2(um2);
+		
+		pService.saveProduct(p1, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
+		pService.saveProduct(p2, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
+		
+		Specialoffer so = new Specialoffer();
+		so.setSpecialofferid(1);
+		so.setCategory("Cat 1");
+		so.setModifieddate(LocalDate.now());
+		System.out.println("Special offer ID = "+so.getSpecialofferid());
+		
+		Specialofferproduct sop = new Specialofferproduct();
+		SpecialofferproductPK sopPK = new SpecialofferproductPK();
+		sopPK.setProductid(p1.getProductid());
+		sopPK.setSpecialofferid(so.getSpecialofferid());
+		sop.setId(sopPK);
+		sop.setModifieddate(LocalDate.now());
+		sop.setSpecialoffer(so);
+		so.addSpecialofferproduct(sop);
+		
+		Salesorderdetail sod = new Salesorderdetail();
+		sod.setUnitprice(BigDecimal.valueOf(0.5));
+		sod.setUnitpricediscount(BigDecimal.ZERO);
+		sod.setSpecialofferproduct(sop);
+		sop.addSalesorderdetail(sod);
+		
+		soService.saveSpecialOffer(so);
+		sopService.saveSpecialOfferProduct(sop, p1.getProductid(), so.getSpecialofferid());
+		sodService.saveSalesOrderDetail(sod, sopPK);
 	}
-	
+	/*
 	@Bean
 	CommandLineRunner runner(UserRepository ur, ProductCategoryRepository pcr, ProductSubcategoryRepository pscr, UnitmeasureRepository umr, ProductDaoImpl pDao, SpecialOfferDaoImpl soDao, SpecialOfferProductDaoImpl sopDao, SalesOrderDetailDaoImpl sodDao) {
 		return args -> {
@@ -142,5 +194,6 @@ public class Taller4MsApplication {
 			sopDao.save(sop);
 			sodDao.save(sod);
 		};
-	}
+	}*/
+
 }

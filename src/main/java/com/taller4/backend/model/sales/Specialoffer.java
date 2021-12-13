@@ -18,8 +18,8 @@ import javax.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.taller4.model.prod.Product;
-import com.taller4.model.validation.*;
+import com.taller4.backend.model.prod.Product;
+import com.taller4.backend.model.validation.*;
 
 import lombok.Data;
 

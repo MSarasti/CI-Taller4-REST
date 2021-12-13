@@ -7,8 +7,7 @@ import java.sql.Timestamp;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import com.taller4.model.validation.addValidation;
-import com.taller4.model.validation.updateValidation;
+import com.taller4.backend.model.validation.*;
 
 /**
  * The persistent class for the salesorderdetail database table.

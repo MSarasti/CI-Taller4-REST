@@ -21,8 +21,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.taller4.model.validation.addValidation;
-import com.taller4.model.validation.updateValidation;
+import com.taller4.backend.model.validation.*;
 
 import lombok.Data;
 
