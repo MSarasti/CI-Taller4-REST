@@ -15,4 +15,12 @@ public interface ProductService {
 	public Productsubcategory searchProductSubcategory(Integer pscId);
 	public Productsubcategory updateProductSubcategory(Integer pscId, Productsubcategory psc);
 	public void deleteProductSubcategory(Integer pscId);
+	public Unitmeasure saveUnitmeasure(Unitmeasure um);
+	public Unitmeasure searchUnitmeasure(Integer umId);
+	public void deleteUnitmeasure(Integer umId);
+	public Product findById(Integer id);
+	public Iterable<Product> findAllProducts();
+	public Iterable<Productcategory> findAllCategories();
+	public Iterable<Productsubcategory> findAllSubcategories();
+	public Iterable<Unitmeasure> findAllUnits();
 }

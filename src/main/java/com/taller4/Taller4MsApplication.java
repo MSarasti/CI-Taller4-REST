@@ -87,10 +87,10 @@ public class Taller4MsApplication {
 		pService.saveProduct(p2, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
 		
 		Specialoffer so = new Specialoffer();
-		so.setSpecialofferid(1);
+		//so.setSpecialofferid(1);
 		so.setCategory("Cat 1");
 		so.setModifieddate(LocalDate.now());
-		System.out.println("Special offer ID = "+so.getSpecialofferid());
+		//System.out.println("Special offer ID = "+so.getSpecialofferid());
 		
 		Specialofferproduct sop = new Specialofferproduct();
 		SpecialofferproductPK sopPK = new SpecialofferproductPK();
