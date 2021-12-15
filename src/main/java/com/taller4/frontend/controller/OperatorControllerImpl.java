@@ -7,30 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.taller4.backend.model.prod.*;
 import com.taller4.backend.model.sales.*;
-import com.taller4.backend.model.validation.addValidation;
-import com.taller4.backend.model.validation.updateValidation;
+import com.taller4.backend.model.validation.*;
 import com.taller4.backend.service.implementation.*;
+import com.taller4.frontend.businessdelegate.*;
 
 @Controller
 public class OperatorControllerImpl {
-	@Autowired
-	public ProductServiceImpl pService;
-	@Autowired
-	public SpecialOfferServiceImpl soService;
-	@Autowired
-	public SpecialOfferProductServiceImpl sopService;
-	@Autowired
-	public SalesOrderDetailServiceImpl sodService;
+	private BusinessDelegate bDelegate;
 	
-	public OperatorControllerImpl() {
+	@Autowired
+	public OperatorControllerImpl(BusinessDelegate bDelegate) {
+		this.bDelegate = bDelegate;
 	}
 
 	@GetMapping("/operator/")
@@ -40,19 +31,19 @@ public class OperatorControllerImpl {
 	
 	@GetMapping("/specialoffer")
     public String indexSpecialOffer(Model model) {
-		model.addAttribute("specialoffers", soService.findAll());
+		model.addAttribute("specialoffers", bDelegate.soFindAll());
         return "operator/specialoffers";
     }
 	
 	@GetMapping("/specialofferproduct")
     public String indexSpecialOfferProduct(Model model) {
-		model.addAttribute("specialofferproducts", sopService.findAll());
+		model.addAttribute("specialofferproducts", bDelegate.sopFindAll());
         return "operator/specialofferproducts";
     }
 	
 	@GetMapping("/salesorderdetail")
     public String indexSOD(Model model) {
-		model.addAttribute("salesorderdetails", sodService.findAll());
+		model.addAttribute("salesorderdetails",  bDelegate.sodFindAll());
         return "operator/salesorderdetails";
     }
 	

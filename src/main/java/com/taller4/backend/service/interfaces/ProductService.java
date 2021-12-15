@@ -26,6 +26,7 @@ public interface ProductService {
 	public Iterable<Product> findByStyle(String style);
 	public Iterable<Object[]> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate);
 	public Iterable<Product> findAllProducts();
+	public Iterable<String> findAllProductnumbers();
 	public Iterable<Productcategory> findAllCategories();
 	public Iterable<Productsubcategory> findAllSubcategories();
 	public Iterable<Unitmeasure> findAllUnits();

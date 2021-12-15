@@ -42,6 +42,13 @@ public class ProductDaoImpl implements ProductDao {
 		String jpql = "Select p from Product p";
 		return entityManager.createQuery(jpql, Product.class).getResultList();
 	}
+	
+	@Override
+	@Transactional
+	public List<String> findAllProductnumbers() {
+		String jpql = "Select p.productnumber from Product p";
+		return entityManager.createQuery(jpql, String.class).getResultList();
+	}
 
 	@Override
 	@Transactional

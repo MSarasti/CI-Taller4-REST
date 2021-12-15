@@ -1,17 +1,16 @@
 package com.taller4.frontend.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.taller4.backend.model.prod.*;
 import com.taller4.backend.model.validation.*;
@@ -148,5 +147,50 @@ public class AdminControllerImpl {
 	public String deleteProduct(@PathVariable("id") Integer id, Model model) {
 		bDelegate.prodDelete(id);
 		return "redirect:/product";
+	}
+	
+	@GetMapping("/product/get/productnumber/")
+	public String queryProductNumberGet(@RequestParam("productnumber") String productnumber, Model model) {
+		return "admin/prodBaseQuery";
+	}
+	
+	@PostMapping("/product/get/productnumber")
+	public String queryProductNumberPost(@RequestParam("productnumber") String productnumber, Model model) {
+		if(!productnumber.isBlank()) {
+			ArrayList<Product> list = new ArrayList<>();
+			list.add(bDelegate.prodFindByProductNumber(productnumber));
+			Iterable<Product> iter =  list;
+			model.addAttribute("products", iter);
+			return "admin/prodBaseQuery";
+		}else
+			return "redirect:/product";
+	}
+	
+	@GetMapping("/product/get/style/")
+	public String queryStyleGet(@RequestParam("style") String style, Model model) {
+		return "admin/prodBaseQuery";
+	}
+	
+	@PostMapping("/product/get/style")
+	public String queryStylePost(@RequestParam("style") String style, Model model) {
+		if(!style.isBlank()) {
+			model.addAttribute("products", bDelegate.prodFindByStyle(style));
+			return "admin/prodBaseQuery";
+		}else
+			return "redirect:/product";
+	}
+	
+	@GetMapping("/product/sellstartdate/to/sellenddate")
+	public String queryDateRangeGet(@RequestParam("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @RequestParam("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model) {
+		return "admin/prodDateRangeQuery";
+	}
+	
+	@PostMapping("/product/sellstartdate/to/sellenddate")
+	public String queryDateRangePost(@RequestParam("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @RequestParam("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model, @RequestParam(value = "action", required = true) String action) {
+		if(sellstartdate!=null && sellenddate!=null && sellstartdate.isBefore(sellenddate)) {
+			model.addAttribute("products", bDelegate.prodFindDateRange(sellstartdate, sellenddate));
+			return "admin/prodDateRangeQuery";
+		}else
+			return "redirect:/product";
 	}
 }

@@ -182,6 +182,10 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.findByDateRange(sellstartdate, sellenddate);
 	}
 	
+	public Iterable<String> findAllProductnumbers() {
+		return pDao.findAllProductnumbers();
+	}
+	
 	public Iterable<Product> findAllProducts() {
 		return pDao.findAll();
 	}
