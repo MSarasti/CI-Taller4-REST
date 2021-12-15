@@ -3,14 +3,12 @@ package com.taller4.backend.service.implementation;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taller4.backend.dao.implementation.SpecialOfferDaoImpl;
 import com.taller4.backend.model.sales.Specialoffer;
-import com.taller4.backend.repository.SpecialofferRepository;
 import com.taller4.backend.service.interfaces.SpecialofferService;
 
 @Service
@@ -64,6 +62,14 @@ public class SpecialOfferServiceImpl implements SpecialofferService {
 
 	public Iterable<Specialoffer> findAll() {
 		return soDao.findAll();
+	}
+	
+	public Iterable<Specialoffer> findByStartDate(Timestamp startdate) {
+		return soDao.findByStartDate(startdate);
+	}
+	
+	public Iterable<Specialoffer> findByEndDate(Timestamp enddate) {
+		return soDao.findByEndDate(enddate);
 	}
 
 	public Specialoffer findById(Integer id) {

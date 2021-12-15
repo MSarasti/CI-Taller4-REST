@@ -50,7 +50,7 @@ public class ProductRestController {
 		return prodService.findByStyle(style);
 	}
 	
-	@GetMapping("/{sellstartdate}_{sellenddate}")
+	@GetMapping("/{sellstartdate}/to/{sellenddate}")
 	public Iterable<Object[]> getByDateRange(@PathVariable("sellstartdate") LocalDate sellstartdate, @PathVariable("sellenddate") LocalDate sellenddate) {
 		return prodService.findByDateRange(sellstartdate, sellenddate);
 	}

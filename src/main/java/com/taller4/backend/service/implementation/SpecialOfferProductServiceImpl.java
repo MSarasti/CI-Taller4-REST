@@ -1,16 +1,12 @@
 package com.taller4.backend.service.implementation;
 
-import java.sql.Timestamp;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taller4.backend.dao.implementation.*;
-import com.taller4.backend.dao.interfaces.SpecialOfferProductDao;
 import com.taller4.backend.model.prod.*;
 import com.taller4.backend.model.sales.*;
-import com.taller4.backend.repository.*;
 import com.taller4.backend.service.interfaces.SpecialofferproductService;
 
 @Service
@@ -20,7 +16,7 @@ public class SpecialOfferProductServiceImpl implements SpecialofferproductServic
 	@Autowired
 	public SpecialOfferDaoImpl soDao;
 	@Autowired
-	public SpecialOfferProductDao sopDao;
+	public SpecialOfferProductDaoImpl sopDao;
 	
 	public SpecialOfferProductServiceImpl() {
 	}
@@ -57,11 +53,13 @@ public class SpecialOfferProductServiceImpl implements SpecialofferproductServic
 		sopDao.delete(sopDao.findById(spId));
 	}
 
-	public Iterable<Specialofferproduct> findAll(){
-		return sopDao.findAll();
-	}
-
+	@Override
 	public Specialofferproduct findById(SpecialofferproductPK id) {
 		return sopDao.findById(id);
+	}
+
+	@Override
+	public Iterable<Specialofferproduct> findAll(){
+		return sopDao.findAll();
 	}
 }
