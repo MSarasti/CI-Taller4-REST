@@ -1,4 +1,4 @@
-package com.taller4.controller;
+package com.taller4.frontend.controller;
 
 import java.util.Optional;
 
@@ -18,7 +18,7 @@ import com.taller4.backend.model.person.UserApp.addValidator;
 import com.taller4.backend.model.person.UserApp.updateValidator;
 import com.taller4.backend.service.implementation.UserServiceImpl;
 
-//@Controller
+@Controller
 public class UserControllerImpl {
 	
 	UserServiceImpl userService;

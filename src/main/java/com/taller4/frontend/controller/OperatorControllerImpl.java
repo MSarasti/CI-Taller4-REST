@@ -1,4 +1,4 @@
-package com.taller4.controller;
+package com.taller4.frontend.controller;
 
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ import com.taller4.backend.model.validation.addValidation;
 import com.taller4.backend.model.validation.updateValidation;
 import com.taller4.backend.service.implementation.*;
 
-//@Controller
+@Controller
 public class OperatorControllerImpl {
 	@Autowired
 	public ProductServiceImpl pService;

@@ -17,7 +17,7 @@ import com.taller4.backend.model.prod.*;
 import com.taller4.backend.model.validation.*;
 import com.taller4.backend.service.implementation.ProductServiceImpl;
 
-@Controller
+//@Controller
 public class AdminControllerImpl {
 	
 	ProductServiceImpl pService;
