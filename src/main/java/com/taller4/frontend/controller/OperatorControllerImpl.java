@@ -1,6 +1,10 @@
 package com.taller4.frontend.controller;
 
+import java.time.*;
+import java.sql.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -186,5 +190,59 @@ public class OperatorControllerImpl {
 	public String deleteSOD(@PathVariable("id") Integer id, Model model) {
 		bDelegate.sodDelete(id);
 		return "redirect:/salesorderdetail";
+	}
+	
+	@GetMapping("/specialoffer/get/{startdate}")
+	public String querySOStartDateGet(@PathVariable("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate, Model model) {
+		return "operator/soQuery";
+	}
+	
+	@PostMapping("/specialoffer/get/{startdate}")
+	public String querySOStartDatePost(@PathVariable("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate, Model model) {
+		if(startdate!=null) {
+			model.addAttribute("specialoffers", bDelegate.soFindStartDate(Timestamp.valueOf(startdate.atStartOfDay())));
+			return "operator/soQuery";
+		}else
+			return "redirect:/specialoffer";
+		
+	}
+	
+	@GetMapping("/specialoffer/get/{enddate}")
+	public String querySOEndDateGet(@PathVariable("enddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enddate, Model model) {
+		return "operator/soQuery";
+	}
+	
+	@PostMapping("/specialoffer/get/{enddate}")
+	public String querySOEndDatePost(@PathVariable("enddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enddate, Model model) {
+		if(enddate!=null) {
+			model.addAttribute("specialoffers", bDelegate.soFindEndDate(Timestamp.valueOf(enddate.atStartOfDay())));
+			return "operator/soQuery";
+		}else
+			return "redirect:/specialoffer";
+	}
+	
+	@GetMapping("/salesorderdetail/get/{productid}")
+	public String querySODProductIdGet(@PathVariable("productid") Integer productid, Model model) {
+		return "operator/sodQuery";
+	}
+	
+	@PostMapping("/salesorderdetail/get/{productid}")
+	public String querySODProductIdPost(@PathVariable("productid") Integer productid, Model model) {
+		if(productid!=null) {
+			model.addAttribute("salesorderdetails", bDelegate.sodFindByProductId(productid));
+			return "operator/sodQuery";
+		}else
+			return "redirect:/salesorderdetail";
+	}
+	
+	@GetMapping("/salesorderdetail/get/SOP")
+	public String querySODMoreSOPGet(Model model) {
+		return "operator/sodSOPQuery";
+	}
+	
+	@PostMapping("/salesorderdetail/get/SOP")
+	public String querySODMoreSOPPost(Model model) {
+		model.addAttribute("sales", bDelegate.sodFindByMoreThanOneSOP());
+		return "operator/sodSOPQuery";
 	}
 }
