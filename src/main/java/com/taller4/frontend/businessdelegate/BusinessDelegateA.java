@@ -21,6 +21,8 @@ public class BusinessDelegateA {
 	public final static String ADMIN_URL = URL + "admin/";
 	public final static String OP_URL = URL + "operator/";
 	public final static String PROD_URL = URL + "product/";
+	public final static String WO_URL = URL + "workorder/";
+	public final static String WOR_URL = URL + "workorderrouting/";
 	public final static String SO_URL = URL + "specialoffer/";
 	public final static String SOP_URL = URL + "specialofferproduct/";
 	public final static String SOD_URL = URL + "salesorderdetail/";
