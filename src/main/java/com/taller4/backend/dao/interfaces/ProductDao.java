@@ -14,6 +14,6 @@ public interface ProductDao {
 	Product findById(Integer id);
 	Product findByProductNumber(String productnumber);	
 	List<Product> findByStyle(String style);
-	List<Object[]> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate);
+	List<?> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate);
 	List<String> findAllProductnumbers();
 }
