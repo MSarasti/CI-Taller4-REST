@@ -1,6 +1,7 @@
 package com.taller4;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
@@ -31,6 +32,8 @@ public class Taller4MsApplication {
 		SpecialOfferServiceImpl soService = c.getBean(SpecialOfferServiceImpl.class);
 		SpecialOfferProductServiceImpl sopService = c.getBean(SpecialOfferProductServiceImpl.class);
 		SalesOrderDetailServiceImpl sodService = c.getBean(SalesOrderDetailServiceImpl.class);
+		WorkOrderServiceImpl woService = c.getBean(WorkOrderServiceImpl.class);
+		WorkOrderRoutingServiceImpl worService = c.getBean(WorkOrderRoutingServiceImpl.class);
 		
 		UserApp user1 = new UserApp();
 		user1.setUsername("Simba1");
@@ -83,8 +86,42 @@ public class Taller4MsApplication {
 		p2.setUnitmeasure1(um1);
 		p2.setUnitmeasure2(um2);
 		
+		Workorder wo1 = new Workorder();
+		wo1.setStartdate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+		wo1.setEnddate(Timestamp.valueOf(LocalDate.now().plusWeeks(2).atStartOfDay()));
+		wo1.setModifieddate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+		wo1.setDuedate(Timestamp.valueOf(LocalDate.now().plusWeeks(1).atStartOfDay()));
+		wo1.setProduct(p1);
+		wo1.setOrderqty(2);
+		
+		Workorder wo2 = new Workorder();
+		wo2.setStartdate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+		wo2.setEnddate(Timestamp.valueOf(LocalDate.now().plusWeeks(3).atStartOfDay()));
+		wo2.setModifieddate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+		wo2.setDuedate(Timestamp.valueOf(LocalDate.now().plusWeeks(2).atStartOfDay()));
+		wo2.setProduct(p2);
+		wo2.setOrderqty(3);
+		
+		Workorderrouting wor1 = new Workorderrouting();
+		WorkorderroutingPK worPK = new WorkorderroutingPK();
+		worPK.setProductid(p1.getProductid());
+		worPK.setWorkorderid(wo1.getWorkorderid());
+		worPK.setOperationsequence(1);
+		wor1.setId(worPK);
+		wor1.setScheduledstartdate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+		wor1.setActualstartdate(Timestamp.valueOf(LocalDate.now().plusDays(2).atStartOfDay()));
+		wor1.setScheduledenddate(Timestamp.valueOf(LocalDate.now().plusWeeks(2).atStartOfDay()));
+		wor1.setActualenddate(Timestamp.valueOf(LocalDate.now().plusWeeks(3).atStartOfDay()));
+		wor1.setModifieddate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+		wor1.setWorkorder(wo1);
+		
 		pService.saveProduct(p1, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
 		pService.saveProduct(p2, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
+		
+		woService.saveWorkOrder(wo1);
+		woService.saveWorkOrder(wo2);
+		
+		worService.saveWorkOrderRouting(wor1);
 		
 		Specialoffer so = new Specialoffer();
 		//so.setSpecialofferid(1);
