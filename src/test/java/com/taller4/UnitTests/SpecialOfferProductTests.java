@@ -1,4 +1,4 @@
-package com.taller3.UnitTests;
+package com.taller4.UnitTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyObject;
@@ -13,10 +13,13 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.taller4.model.prod.*;
-import com.taller4.model.sales.*;
-import com.taller4.repository.*;
-import com.taller4.service.implementation.*;
+import com.taller4.Taller4MsApplication;
+import com.taller4.backend.dao.implementation.*;
+import com.taller4.backend.model.prod.*;
+import com.taller4.backend.model.sales.*;
+import com.taller4.backend.repository.*;
+import com.taller4.backend.service.implementation.*;
+import com.taller4.backend.service.interfaces.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)

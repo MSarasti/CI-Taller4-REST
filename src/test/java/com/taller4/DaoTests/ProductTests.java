@@ -1,4 +1,4 @@
-package com.taller3.DaoTests;
+package com.taller4.DaoTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,12 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.taller4.Taller3MsApplication;
-import com.taller4.dao.implementation.*;
-import com.taller4.model.prod.*;
+import com.taller4.Taller4MsApplication;
+import com.taller4.backend.dao.implementation.*;
+import com.taller4.backend.model.prod.*;
 
 @SpringBootTest
-@ContextConfiguration(classes = Taller3MsApplication.class)
+@ContextConfiguration(classes = Taller4MsApplication.class)
 @ExtendWith(SpringExtension.class)
 public class ProductTests {
 	@Autowired

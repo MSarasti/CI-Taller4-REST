@@ -1,4 +1,4 @@
-package com.taller3.IntegrationTests;
+package com.taller4.IntegrationTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,9 +10,11 @@ import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.taller4.model.sales.Specialoffer;
-import com.taller4.repository.SpecialofferRepository;
-import com.taller4.service.interfaces.SpecialofferService;
+import com.taller4.Taller4MsApplication;
+import com.taller4.backend.model.prod.*;
+import com.taller4.backend.model.sales.*;
+import com.taller4.backend.service.implementation.*;
+import com.taller4.backend.service.interfaces.*;
 
 @SpringBootTest
 public class SpecialOfferTests {/*

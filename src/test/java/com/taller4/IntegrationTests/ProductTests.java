@@ -1,4 +1,4 @@
-package com.taller3.IntegrationTests;
+package com.taller4.IntegrationTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -15,14 +15,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.taller4.Taller3MsApplication;
-import com.taller4.model.prod.*;
-import com.taller4.repository.*;
-import com.taller4.service.implementation.*;
-import com.taller4.service.interfaces.ProductService;
+import com.taller4.Taller4MsApplication;
+import com.taller4.backend.model.prod.*;
+import com.taller4.backend.model.sales.*;
+import com.taller4.backend.service.implementation.*;
+import com.taller4.backend.service.interfaces.*;
 
 @SpringBootTest
-@ContextConfiguration(classes = Taller3MsApplication.class)
+@ContextConfiguration(classes = Taller4MsApplication.class)
 @ExtendWith(SpringExtension.class)
 public class ProductTests {
 	@Autowired
