@@ -39,7 +39,7 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
 	@Override
 	@Transactional
 	public List<Workorder> findAll() {
-		String jpql = "Select s from Workorder s";
+		String jpql = "Select w from Workorder w";
 		return entityManager.createQuery(jpql, Workorder.class).getResultList();
 	}
 

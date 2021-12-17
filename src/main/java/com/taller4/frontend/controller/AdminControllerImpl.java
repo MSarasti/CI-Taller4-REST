@@ -1,8 +1,8 @@
 package com.taller4.frontend.controller;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.time.*;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.taller4.backend.model.prod.*;
 import com.taller4.backend.model.validation.*;
-import com.taller4.backend.service.implementation.ProductServiceImpl;
+import com.taller4.backend.service.implementation.*;
 import com.taller4.frontend.businessdelegate.BusinessDelegate;
 
 @Controller
@@ -35,6 +35,18 @@ public class AdminControllerImpl {
     public String products(Model model) {
 		model.addAttribute("products", bDelegate.prodFindAll());
         return "admin/products";
+    }
+	
+	@GetMapping("/workorder")
+    public String indexWorkOrder(Model model) {
+		model.addAttribute("workorders", bDelegate.woFindAll());
+        return "admin/workorders";
+    }
+	
+	@GetMapping("/workorderrouting")
+    public String indexWorkOrderRouting(Model model) {
+		model.addAttribute("workorderroutings", bDelegate.worFindAll());
+        return "admin/workorderroutings";
     }
 	
 	@GetMapping("/productcategory/add")
@@ -101,7 +113,7 @@ public class AdminControllerImpl {
 	}
 	
 	@PostMapping("/product/add")
-	public String addProductPost(@Validated({ addValidation.class }) @ModelAttribute("prod") Product product, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+	public String addProductPost(@ModelAttribute("prod") Product product, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				//System.out.println("Why - "+bindingResult.getAllErrors().toString());
@@ -116,6 +128,54 @@ public class AdminControllerImpl {
 		return "redirect:/product";
 	}
 	
+	@GetMapping("/workorder/add")
+	public String addWorkOrderGet(Model model) {
+		model.addAttribute("worder", new Workorder());
+		model.addAttribute("prods", bDelegate.prodFindAll());
+		return "admin/addWorkOrder";
+	}
+	
+	@PostMapping("/workorder/add")
+	public String addWorkOrderPost(@ModelAttribute("worder") Workorder workorder, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("worder", workorder);
+				model.addAttribute("prods", bDelegate.prodFindAll());
+				return "admin/addWorkOrder";
+			}else 
+				bDelegate.woSave(workorder);
+		}
+		return "redirect:/workorder";
+	}
+	
+	@GetMapping("/workorderrouting/add")
+	public String addWorkOrderRoutingGet(Model model) {
+		model.addAttribute("woroute", new Workorderrouting());
+		model.addAttribute("worders", bDelegate.woFindAll());
+		return "admin/addWorkOrderRouting";
+	}
+	
+	@PostMapping("/workorderrouting/add")
+	public String addWorkOrderRoutingPost(@ModelAttribute("woroute") Workorderrouting workorderrouting, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("woroute", workorderrouting);
+				model.addAttribute("worders", bDelegate.woFindAll());
+				return "admin/addWorkOrderRouting";
+			}else {
+				WorkorderroutingPK worPK = new WorkorderroutingPK();
+				worPK.setWorkorderid(workorderrouting.getWorkorder().getWorkorderid());
+				worPK.setProductid(workorderrouting.getWorkorder().getProduct().getProductid());
+				ArrayList<Workorderrouting> list = new ArrayList<>();
+				bDelegate.worFindAll().iterator().forEachRemaining(list::add);
+				worPK.setOperationsequence(list.size()+1);
+				workorderrouting.setId(worPK);
+				bDelegate.worSave(workorderrouting);
+			}
+		}
+		return "redirect:/workorderrouting";
+	}
+	
 	@GetMapping("/product/edit/{id}")
 	public String editProductGet(@PathVariable("id") Integer id, Model model) {
 		Product product = bDelegate.prodFindById(id);
@@ -127,7 +187,7 @@ public class AdminControllerImpl {
 	}
 	
 	@PostMapping("/product/edit/{id}")
-	public String editProductPost(@PathVariable("id") Integer id, @Validated(updateValidation.class) Product product, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+	public String editProductPost(@PathVariable("id") Integer id, @Validated(updateValidation.class) @ModelAttribute("prod") Product product, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("prod",  bDelegate.prodFindById(id));
@@ -143,10 +203,67 @@ public class AdminControllerImpl {
 		return "redirect:/product";
 	}
 	
+	@GetMapping("/workorder/edit/{id}")
+	public String editWorkOrderGet(@PathVariable("id") Integer id, Model model) {
+		Workorder workorder = bDelegate.woFindById(id);
+		model.addAttribute("worder", workorder);
+		model.addAttribute("prods", bDelegate.prodFindAll());
+		return "admin/editWorkOrder";
+	}
+	
+	@PostMapping("/workorder/edit/{id}")
+	public String editWorkOrderPost(@PathVariable("id") Integer id, @Validated(updateValidation.class) @ModelAttribute("worder") Workorder workorder, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if (!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("worder",  bDelegate.woFindById(id));
+				model.addAttribute("prods", bDelegate.prodFindAll());
+				return "admin/editWorkOrder";
+			}else {
+				workorder.setWorkorderid(id);
+				bDelegate.woUpdate(workorder);
+			}
+		}
+		return "redirect:/workorder";
+	}
+	
+	@GetMapping("/workorderrouting/edit/{id}")
+	public String editWorkOrderRoutingGet(@PathVariable("id") WorkorderroutingPK id, Model model) {
+		model.addAttribute("woroute", bDelegate.worFindById(id));
+		model.addAttribute("worders", bDelegate.woFindAll());
+		return "admin/editWorkOrderRouting";
+	}
+	
+	@PostMapping("/workorderrouting/edit/{id}")
+	public String editWorkOrderRoutingPost(@PathVariable("id") WorkorderroutingPK id, @ModelAttribute("woroute") Workorderrouting workorderrouting, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("woroute", bDelegate.worFindById(id));
+				model.addAttribute("worders", bDelegate.woFindAll());
+				return "admin/editWorkOrderRouting";
+			}else {
+				workorderrouting.setId(id);
+				bDelegate.worUpdate(workorderrouting);
+			}
+		}
+		return "redirect:/workorderrouting";
+	}
+	
 	@GetMapping("/product/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Integer id, Model model) {
 		bDelegate.prodDelete(id);
 		return "redirect:/product";
+	}
+	
+	@GetMapping("/workorder/delete/{id}")
+	public String deleteWorkOrder(@PathVariable("id") Integer id, Model model) {
+		bDelegate.woDelete(id);
+		return "redirect:/workorder";
+	}
+	
+	@GetMapping("/workorderrouting/delete/{id}")
+	public String deleteWorkOrder(@PathVariable("id") WorkorderroutingPK id, Model model) {
+		bDelegate.worDelete(id);
+		return "redirect:/workorderrouting";
 	}
 	
 	@GetMapping("/product/get/productnumber/")
@@ -192,5 +309,61 @@ public class AdminControllerImpl {
 			return "admin/prodDateRangeQuery";
 		}else
 			return "redirect:/product";
+	}
+	
+	@GetMapping("/workorder/get/startdate/")
+	public String queryWOStartDateGet(@RequestParam("startdate") LocalDate startdate, Model model) {
+		return "admin/woQuery";
+	}
+	
+	@PostMapping("/workorder/get/startdate")
+	public String queryWOStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
+		if(startdate!=null) {
+			model.addAttribute("products", bDelegate.woFindByStartDate(Timestamp.valueOf(startdate.atStartOfDay())));
+			return "admin/woQuery";
+		}else
+			return "redirect:/workorder";
+	}
+	
+	@GetMapping("/workorder/get/enddate/")
+	public String queryWOEndDateGet(@RequestParam("enddate") LocalDate enddate, Model model) {
+		return "admin/woQuery";
+	}
+	
+	@PostMapping("/workorder/get/enddate")
+	public String queryWOEndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
+		if(enddate!=null) {
+			model.addAttribute("workorders", bDelegate.woFindByEndDate(Timestamp.valueOf(enddate.atStartOfDay())));
+			return "admin/worQuery";
+		}else
+			return "redirect:/workorder";
+	}
+	
+	@GetMapping("/workorderrouting/get/startdate/")
+	public String queryWORStartDateGet(@RequestParam("startdate") LocalDate startdate, Model model) {
+		return "admin/woQuery";
+	}
+	
+	@PostMapping("/workorderrouting/get/startdate")
+	public String queryWORStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
+		if(startdate!=null) {
+			model.addAttribute("workorderroutings", bDelegate.worFindByStartDate(Timestamp.valueOf(startdate.atStartOfDay())));
+			return "admin/worQuery";
+		}else
+			return "redirect:/workorderrouting";
+	}
+	
+	@GetMapping("/workorderrouting/get/enddate/")
+	public String queryWOREndDateGet(@RequestParam("enddate") LocalDate enddate, Model model) {
+		return "admin/worQuery";
+	}
+	
+	@PostMapping("/workorderrouting/get/enddate")
+	public String queryWOREndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
+		if(enddate!=null) {
+			model.addAttribute("workorderroutings", bDelegate.worFindByEndDate(Timestamp.valueOf(enddate.atStartOfDay())));
+			return "admin/worQuery";
+		}else
+			return "redirect:/workorderrouting";
 	}
 }

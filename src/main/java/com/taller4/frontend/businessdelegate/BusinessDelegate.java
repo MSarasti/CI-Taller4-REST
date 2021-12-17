@@ -21,6 +21,8 @@ public class BusinessDelegate {
 	private ProductSubcategoryRestController pSubRest;
 	private UnitMeasureRestController umRest;
 	private ProductRestController prodRest;
+	private WorkOrderRestController woRest;
+	private WorkOrderRoutingRestController worRest;
 
 	//Operator Rest Controllers
 	private SpecialofferRestController soRest;
@@ -30,6 +32,7 @@ public class BusinessDelegate {
 	@Autowired
 	public BusinessDelegate(UserRestController userRest, ProductCategoryRestController pCatRest,
 			ProductSubcategoryRestController pSubRest, UnitMeasureRestController umRest, ProductRestController prodRest,
+			WorkOrderRestController woRest, WorkOrderRoutingRestController worRest,
 			SpecialofferRestController soRest, SpecialofferproductRestController sopRest,
 			SalesorderdetailRestController sodRest) {
 		this.userRest = userRest;
@@ -37,6 +40,8 @@ public class BusinessDelegate {
 		this.pSubRest = pSubRest;
 		this.umRest = umRest;
 		this.prodRest = prodRest;
+		this.woRest = woRest;
+		this.worRest = worRest;
 		this.soRest = soRest;
 		this.sopRest = sopRest;
 		this.sodRest = sodRest;
@@ -119,6 +124,64 @@ public class BusinessDelegate {
 	
 	public void prodDelete(Integer id) {
 		prodRest.delete(id);
+	}
+	
+	//Workorder
+	public Iterable<Workorder> woFindAll() {
+		return woRest.getAll();
+	}
+	
+	public Workorder woFindById(Integer id) {
+		return woRest.getById(id);
+	}
+	
+	public Iterable<Workorder> woFindByStartDate(Timestamp startdate) {
+		return woRest.getByStartDate(startdate);
+	}
+	
+	public Iterable<Workorder> woFindByEndDate(Timestamp enddate) {
+		return woRest.getByEndDate(enddate);
+	}
+	
+	public Workorder woSave(Workorder workorder) {
+		return woRest.add(workorder);
+	}
+	
+	public void woUpdate(Workorder workorder) {
+		woRest.update(workorder);
+	}
+	
+	public void woDelete(Integer id) {
+		woRest.delete(id);
+	}
+	
+	//Workorderrouting
+	public Iterable<Workorderrouting> worFindAll() {
+		return worRest.getAll();
+	}
+	
+	public Workorderrouting worFindById(WorkorderroutingPK id) {
+		return worRest.getById(id);
+	}
+	
+	public Iterable<Workorderrouting> worFindByStartDate(Timestamp startdate) {
+		return worRest.getByStartDate(startdate);
+	}
+	
+	public Iterable<Workorderrouting> worFindByEndDate(Timestamp enddate) {
+		return worRest.getByEndDate(enddate);
+	}
+	
+	public Workorderrouting worSave(Workorderrouting workorderrouting) {
+		return worRest.add(workorderrouting);
+	}
+	
+	public void worUpdate(Workorderrouting workorderrouting) {
+		worRest.update(workorderrouting);
+	}
+	
+	public void worDelete(WorkorderroutingPK id) {
+		worRest.delete(id);
 	}
 	
 	//Operator Methods
