@@ -8,6 +8,8 @@ import org.springframework.test.context.junit.jupiter.*;
 import org.springframework.test.web.client.*;
 
 import com.taller4.*;
+import com.taller4.backend.model.prod.*;
+import com.taller4.backend.model.sales.*;
 import com.taller4.frontend.businessdelegate.*;
 
 @SpringBootTest
@@ -16,12 +18,9 @@ import com.taller4.frontend.businessdelegate.*;
 public class BusinessDelegateTests {
 
 	private BusinessDelegate bDelegate;
-	
-	private MockRestServiceServer restServiceServer;
 
 	@Autowired
-	public BusinessDelegateTests(BusinessDelegate bDelegate, MockRestServiceServer restServiceServer) {
+	public BusinessDelegateTests(BusinessDelegate bDelegate) {
 		this.bDelegate = bDelegate;
-		this.restServiceServer = restServiceServer;
 	}
 }
