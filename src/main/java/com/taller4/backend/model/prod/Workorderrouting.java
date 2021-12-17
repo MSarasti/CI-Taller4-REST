@@ -43,6 +43,9 @@ public class Workorderrouting implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="workorderid", insertable=false, updatable=false)
 	private Workorder workorder;
+	
+	@Transient
+	private Integer wId;
 
 	public Workorderrouting() {
 	}

@@ -3,6 +3,7 @@ package com.taller4.backend.model.prod;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,6 +46,9 @@ public class Workorder implements Serializable {
 	//bi-directional many-to-one association to Workorderrouting
 	@OneToMany(mappedBy="workorder")
 	private List<Workorderrouting> workorderroutings;
+	
+	@Transient
+	public Integer pId;
 
 	public Workorder() {
 	}
@@ -130,6 +134,8 @@ public class Workorder implements Serializable {
 	}
 
 	public Workorderrouting addWorkorderrouting(Workorderrouting workorderrouting) {
+		if(this.workorderroutings==null)
+			this.workorderroutings = new ArrayList<>();
 		getWorkorderroutings().add(workorderrouting);
 		workorderrouting.setWorkorder(this);
 
