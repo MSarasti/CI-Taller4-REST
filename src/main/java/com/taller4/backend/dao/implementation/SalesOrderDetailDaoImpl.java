@@ -59,8 +59,8 @@ public class SalesOrderDetailDaoImpl implements SalesOrderDetailDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Object[]> findOrderDetailByProductWithMoreThanOneSOP() {
-		String jpql = "Select s, p.name from Salesorderdetail s WHERE (Select COUNT(sop) FROM s.specialofferproduct sop, Product p WHERE sop.id.productid=p.productid) > 1 ORDER BY p.name ASC";
+	public List<?> findOrderDetailByProductWithMoreThanOneSOP() {
+		String jpql = "Select s, p.name from Salesorderdetail s WHERE (Select COUNT(*) FROM s.specialofferproduct sop, Product p WHERE sop.id.productid=p.productid) > 1 ORDER BY p.name ASC";
 		return entityManager.createQuery(jpql).getResultList();
 	}
 

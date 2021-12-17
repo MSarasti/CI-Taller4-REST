@@ -87,7 +87,7 @@ public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 	}
 	
 	@Override
-	public Iterable<Object[]> findOrderDetailByProductWithMoreThanOneSOP() {
+	public Iterable<?> findOrderDetailByProductWithMoreThanOneSOP() {
 		return sodDao.findOrderDetailByProductWithMoreThanOneSOP();
 	}
 }

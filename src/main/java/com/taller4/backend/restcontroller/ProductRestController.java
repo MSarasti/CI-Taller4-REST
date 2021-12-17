@@ -51,7 +51,7 @@ public class ProductRestController {
 	}
 	
 	@GetMapping("/sellstartdate/to/sellenddate")
-	public Iterable<Object[]> getByDateRange(@RequestParam("sellstartdate") LocalDate sellstartdate, @RequestParam("sellenddate") LocalDate sellenddate) {
+	public Iterable<?> getByDateRange(@RequestParam("sellstartdate") LocalDate sellstartdate, @RequestParam("sellenddate") LocalDate sellenddate) {
 		return prodService.findByDateRange(sellstartdate, sellenddate);
 	}
 	

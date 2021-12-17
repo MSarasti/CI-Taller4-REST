@@ -43,7 +43,7 @@ public class SalesorderdetailRestController {
 	}
 	
 	@GetMapping("/get/SOP")
-	public Iterable<Object[]> getByMoreThanOneSOP() {
+	public Iterable<?> getByMoreThanOneSOP() {
 		return sodService.findOrderDetailByProductWithMoreThanOneSOP();
 	}
 	

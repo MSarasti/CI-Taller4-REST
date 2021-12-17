@@ -110,7 +110,7 @@ public class BusinessDelegate {
 		return prodRest.getByStyle(style);
 	}
 	
-	public Iterable<Object[]> prodFindDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
+	public Iterable<?> prodFindDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
 		return prodRest.getByDateRange(sellstartdate, sellenddate);
 	}
 	
@@ -248,7 +248,7 @@ public class BusinessDelegate {
 		return sodRest.getByProductId(pId);
 	}
 	
-	public Iterable<Object[]> sodFindByMoreThanOneSOP() {
+	public Iterable<?> sodFindByMoreThanOneSOP() {
 		return sodRest.getByMoreThanOneSOP();
 	}
 	

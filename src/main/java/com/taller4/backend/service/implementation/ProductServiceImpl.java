@@ -178,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.findByStyle(style);
 	}
 	
-	public Iterable<Object[]> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
+	public Iterable<?> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
 		return pDao.findByDateRange(sellstartdate, sellenddate);
 	}
 	
