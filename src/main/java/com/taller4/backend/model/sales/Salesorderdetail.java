@@ -9,19 +9,22 @@ import javax.validation.constraints.*;
 
 import com.taller4.backend.model.validation.*;
 
+import lombok.Data;
+
 /**
  * The persistent class for the salesorderdetail database table.
  *
  */
 @Entity
+@Data
 @NamedQuery(name = "Salesorderdetail.findAll", query = "SELECT s FROM Salesorderdetail s")
 public class Salesorderdetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@SequenceGenerator(name = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR", allocationSize = 1, sequenceName = "SALESORDERDETAIL_SEQ")
+	@SequenceGenerator(name = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR", sequenceName = "SALESORDERDETAIL_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR")
-	private Integer salesorderdetailid;
+	private Integer id;
 	
 	/*@EmbeddedId
 	private SalesorderdetailPK id;*/
@@ -64,7 +67,7 @@ public class Salesorderdetail implements Serializable {
 	}
 	
 	public Integer getSalesOrderDetailId() {
-		return this.salesorderdetailid;
+		return this.id;
 	}
 
 	/*public SalesorderdetailPK getId() {
@@ -100,7 +103,7 @@ public class Salesorderdetail implements Serializable {
 	}
 	
 	public void setSalesOrderDetailId(Integer id) {
-		this.salesorderdetailid = id;
+		this.id = id;
 	}
 	
 	/*public void setId(SalesorderdetailPK id) {

@@ -63,4 +63,8 @@ public class WorkorderroutingPK implements Serializable {
 		
 		return hash;
 	}
+	
+	public String toString() {
+		return workorderid+"-"+productid+"-"+operationsequence;
+	}
 }

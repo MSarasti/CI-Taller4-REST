@@ -40,7 +40,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="wor : ${workorderroutings}">
-								<td th:text="${wor.id}"></td>
+								<td th:text="${wor.id.toString}"></td>
 								<td th:text="${wor.workorder.workorderid}"></td>
 								<td th:text="${wor.plannedcost}"></td>
 								<td th:text="${wor.actualcost}"></td>

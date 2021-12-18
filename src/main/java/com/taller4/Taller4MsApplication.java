@@ -130,17 +130,19 @@ public class Taller4MsApplication {
 		wor1.setScheduledenddate(LocalDate.now().plusWeeks(2));
 		wor1.setActualenddate(LocalDate.now().plusWeeks(3));
 		wor1.setModifieddate(LocalDate.now());
+		wor1.setPlannedcost(BigDecimal.valueOf(1000000));
+		wor1.setActualcost(BigDecimal.valueOf(2500000));
 		wor1.setWorkorder(wo1);
 		
 		wor1 = worService.saveWorkOrderRouting(wor1);
 		
 		Specialoffer so = new Specialoffer();
-		//so.setSpecialofferid(1);
 		so.setCategory("Cat 1");
 		so.setModifieddate(LocalDate.now());
+		so.setStartdate(LocalDate.now());
+		so.setEnddate(LocalDate.now().plusWeeks(4));
 		
 		so = soService.saveSpecialOffer(so);
-		//System.out.println("Special offer ID = "+so.getSpecialofferid());
 		
 		Specialofferproduct sop = new Specialofferproduct();
 		SpecialofferproductPK sopPK = new SpecialofferproductPK();
@@ -159,7 +161,7 @@ public class Taller4MsApplication {
 		sod.setSpecialofferproduct(sop);
 		sop.addSalesorderdetail(sod);
 		
-		sodService.saveSalesOrderDetail(sod, sopPK);
+		sod = sodService.saveSalesOrderDetail(sod, sopPK);
 	}
 	/*
 	@Bean

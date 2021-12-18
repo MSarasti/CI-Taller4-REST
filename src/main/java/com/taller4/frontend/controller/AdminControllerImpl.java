@@ -263,19 +263,19 @@ public class AdminControllerImpl {
 		return "redirect:/workorderrouting";
 	}
 	
-	@GetMapping("/product/delete/{id}")
+	@GetMapping("/product/del/{id}")
 	public String deleteProduct(@PathVariable("id") Integer id, Model model) {
 		bDelegate.prodDelete(id);
 		return "redirect:/product";
 	}
 	
-	@GetMapping("/workorder/delete/{id}")
+	@GetMapping("/workorder/del/{id}")
 	public String deleteWorkOrder(@PathVariable("id") Integer id, Model model) {
 		bDelegate.woDelete(id);
 		return "redirect:/workorder";
 	}
 	
-	@GetMapping("/workorderrouting/delete/{id1}_{id2}_{id3}")
+	@GetMapping("/workorderrouting/del/{id1}_{id2}_{id3}")
 	public String deleteWorkOrder(@PathVariable("id1") Integer wId, @PathVariable("id2") Integer pId, @PathVariable("id3") Integer op,  Model model) {
 		WorkorderroutingPK pk = new WorkorderroutingPK();
 		pk.setWorkorderid(wId);
@@ -285,12 +285,12 @@ public class AdminControllerImpl {
 		return "redirect:/workorderrouting";
 	}
 	
-	@GetMapping("/product/query/{pnum}")
+	@GetMapping("/product/query/productnumber/{pnum}")
 	public String queryProductNumberGet(@PathVariable("pnum") String productnumber, Model model) {
 		return "admin/prodBaseQuery";
 	}
 	
-	@PostMapping("/product/query/{pnum}")
+	@PostMapping("/product/query/productnumber/{pnum}")
 	public String queryProductNumberPost(@PathVariable("pnum") String productnumber, Model model) {
 		if(!productnumber.isBlank()) {
 			ArrayList<Product> list = new ArrayList<>();
@@ -302,12 +302,12 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/product/query/{style}")
+	@GetMapping("/product/query/style/{style}")
 	public String queryStyleGet(@PathVariable("style") String style, Model model) {
 		return "admin/prodBaseQuery";
 	}
 	
-	@PostMapping("/product/query/{style}")
+	@PostMapping("/product/query/style/{style}")
 	public String queryStylePost(@PathVariable("style") String style, Model model) {
 		if(!style.isBlank()) {
 			model.addAttribute("products", bDelegate.prodFindByStyle(style));
@@ -316,12 +316,12 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/product/query/{sellstartdate}_{sellenddate}")
+	@GetMapping("/product/query/range/{sellstartdate}_{sellenddate}")
 	public String queryDateRangeGet(@PathVariable("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @PathVariable("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model) {
 		return "admin/prodDateRangeQuery";
 	}
 	
-	@PostMapping("/product/query/{sellstartdate}_{sellenddate}")
+	@PostMapping("/product/query/range/{sellstartdate}_{sellenddate}")
 	public String queryDateRangePost(@PathVariable("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @PathVariable("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(sellstartdate!=null && sellenddate!=null && sellstartdate.isBefore(sellenddate)) {
 			model.addAttribute("products", bDelegate.prodFindDateRange(sellstartdate, sellenddate));
@@ -330,13 +330,13 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/workorder/query/startdate/")
-	public String queryWOStartDateGet(@RequestParam("startdate") LocalDate startdate, Model model) {
+	@GetMapping("/workorder/query/startdate/{startdate}")
+	public String queryWOStartDateGet(@PathVariable("startdate") LocalDate startdate, Model model) {
 		return "admin/woQuery";
 	}
 	
-	@PostMapping("/workorder/query/startdate")
-	public String queryWOStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
+	@PostMapping("/workorder/query/startdate/{startdate}")
+	public String queryWOStartDatePost(@PathVariable("startdate") LocalDate startdate, Model model) {
 		if(startdate!=null) {
 			model.addAttribute("workorders", bDelegate.woFindByStartDate(startdate));
 			return "admin/woQuery";
@@ -344,13 +344,13 @@ public class AdminControllerImpl {
 			return "redirect:/workorder";
 	}
 	
-	@GetMapping("/workorder/query/enddate/")
-	public String queryWOEndDateGet(@RequestParam("enddate") LocalDate enddate, Model model) {
+	@GetMapping("/workorder/query/enddate/{enddate}")
+	public String queryWOEndDateGet(@PathVariable("enddate") LocalDate enddate, Model model) {
 		return "admin/woQuery";
 	}
 	
-	@PostMapping("/workorder/query/enddate")
-	public String queryWOEndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
+	@PostMapping("/workorder/query/enddate/{enddate}")
+	public String queryWOEndDatePost(@PathVariable("enddate") LocalDate enddate, Model model) {
 		if(enddate!=null) {
 			model.addAttribute("workorders", bDelegate.woFindByEndDate(enddate));
 			return "admin/worQuery";
@@ -358,13 +358,13 @@ public class AdminControllerImpl {
 			return "redirect:/workorder";
 	}
 	
-	@GetMapping("/workorderrouting/query/startdate/")
-	public String queryWORStartDateGet(@RequestParam("startdate") LocalDate startdate, Model model) {
+	@GetMapping("/workorderrouting/query/startdate/{startdate}")
+	public String queryWORStartDateGet(@PathVariable("startdate") LocalDate startdate, Model model) {
 		return "admin/woQuery";
 	}
 	
-	@PostMapping("/workorderrouting/query/startdate")
-	public String queryWORStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
+	@PostMapping("/workorderrouting/query/startdate/{startdate}")
+	public String queryWORStartDatePost(@PathVariable("startdate") LocalDate startdate, Model model) {
 		if(startdate!=null) {
 			model.addAttribute("workorderroutings", bDelegate.worFindByStartDate(startdate));
 			return "admin/worQuery";
@@ -372,13 +372,13 @@ public class AdminControllerImpl {
 			return "redirect:/workorderrouting";
 	}
 	
-	@GetMapping("/workorderrouting/query/enddate/")
-	public String queryWOREndDateGet(@RequestParam("enddate") LocalDate enddate, Model model) {
+	@GetMapping("/workorderrouting/query/enddate/{enddate}")
+	public String queryWOREndDateGet(@PathVariable("enddate") LocalDate enddate, Model model) {
 		return "admin/worQuery";
 	}
 	
-	@PostMapping("/workorderrouting/query/enddate")
-	public String queryWOREndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
+	@PostMapping("/workorderrouting/query/enddate/{enddate}")
+	public String queryWOREndDatePost(@PathVariable("enddate") LocalDate enddate, Model model) {
 		if(enddate!=null) {
 			model.addAttribute("workorderroutings", bDelegate.worFindByEndDate(enddate));
 			return "admin/worQuery";

@@ -55,9 +55,9 @@
 								<td th:text="${prod.productsubcategory.name}"></td>
 								<td th:text="${prod.unitmeasure1.name}"></td>
 								<td th:text="${prod.unitmeasure2.name}"></td>
-								<td><a th:href="@{/product/query/{pnum}(pnum=${prod.productnumber})}" 
+								<td><a th:href="@{/product/query/productnumber/{pnum}(pnum=${prod.productnumber})}" 
 									class="btn btn-primary"><i class="fa fa-search"></i></a></td>
-								<td><a th:href="@{/product/query/{style}(style=${prod.style}}" 
+								<td><a th:href="@{/product/query/style/{style}(style=${prod.style}}" 
 									class="btn btn-primary"><i class="fa fa-search"></i></a></td>
 								<td><a th:href="@{/product/edit/{id}(id=${prod.productid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
@@ -75,20 +75,20 @@
 					<label for="pnum" class="col-form-label">Product Number</label> <input
 								type="text" th:name="pnum" class="form-control" id="pnum"
 								placeholder="Number"> 
-					<a th:href="@{/product/query/{pnum}(pnum=${pnum})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for a product with a given product number</a>	
+					<a th:href="@{/product/query/productnumber/{pnum}(pnum=${pnum})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for a product with a given product number</a>	
 				</p>
 				<p>
 					<label for="style" class="col-form-label">Style</label> <input
 								type="text" th:name="style" class="form-control" id="style"
 								placeholder="Style"> 
-					<a th:href="@{/product/query/{style}(style=${style}}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
+					<a th:href="@{/product/query/style/{style}(style=${style}}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
 				</p>
 				<p>
 					<label for="pStartQuery" class="col-form-label">From</label> <input
 								type="date" th:name="sellstartdate" class="form-control" id="pStartQuery">
 					<label for="pEndQuery" class="col-form-label">To</label> <input
 								type="date" th:name="sellenddate" class="form-control" id="pEndQuery"> 
-					<a th:href="@{/product/query/{sellstartdate}_{sellenddate}(sellstartdate=${sellstartdate}, sellenddate=${sellenddate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
+					<a th:href="@{/product/query/range/{sellstartdate}_{sellenddate}(sellstartdate=${sellstartdate}, sellenddate=${sellenddate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
 				</p>
 				<p>
 					<a href="/admin/"><i class="fas fa-user-edit ml-2"></i> Go to Admin Menu</a>

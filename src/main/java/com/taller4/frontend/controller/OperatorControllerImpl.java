@@ -176,30 +176,30 @@ public class OperatorControllerImpl {
 		return "redirect:/salesorderdetail";
 	}
 	
-	@GetMapping("/specialoffer/delete/{id}")
+	@GetMapping("/specialoffer/del/{id}")
 	public String deleteSO(@PathVariable("id") Integer id, Model model) {
 		bDelegate.soDelete(id);
 		return "redirect:/specialoffer";
 	}
 	
-	@GetMapping("/specialofferproduct/delete/{id}")
+	@GetMapping("/specialofferproduct/del/{id}")
 	public String deleteSOP(@PathVariable("id") SpecialofferproductPK id, Model model) {
 		bDelegate.sopDelete(id);
 		return "redirect:/specialofferproduct";
 	}
 	
-	@GetMapping("/salesorderdetail/delete/{id}")
+	@GetMapping("/salesorderdetail/del/{id}")
 	public String deleteSOD(@PathVariable("id") Integer id, Model model) {
 		bDelegate.sodDelete(id);
 		return "redirect:/salesorderdetail";
 	}
 	
-	@GetMapping("/specialoffer/query/{startdate}")
+	@GetMapping("/specialoffer/query/startdate/{startdate}")
 	public String querySOStartDateGet(@PathVariable("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate, Model model) {
 		return "operator/soQuery";
 	}
 	
-	@PostMapping("/specialoffer/query/{startdate}")
+	@PostMapping("/specialoffer/query/startdate/{startdate}")
 	public String querySOStartDatePost(@PathVariable("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate, Model model) {
 		if(startdate!=null) {
 			model.addAttribute("specialoffers", bDelegate.soFindStartDate(startdate));
@@ -209,12 +209,12 @@ public class OperatorControllerImpl {
 		
 	}
 	
-	@GetMapping("/specialoffer/query/{enddate}")
+	@GetMapping("/specialoffer/query/enddate/{enddate}")
 	public String querySOEndDateGet(@PathVariable("enddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enddate, Model model) {
 		return "operator/soQuery";
 	}
 	
-	@PostMapping("/specialoffer/query/{enddate}")
+	@PostMapping("/specialoffer/query/enddate/{enddate}")
 	public String querySOEndDatePost(@PathVariable("enddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enddate, Model model) {
 		if(enddate!=null) {
 			model.addAttribute("specialoffers", bDelegate.soFindEndDate(enddate));
@@ -223,12 +223,12 @@ public class OperatorControllerImpl {
 			return "redirect:/specialoffer";
 	}
 	
-	@GetMapping("/salesorderdetail/query/{productid}")
+	@GetMapping("/salesorderdetail/query/productid/{productid}")
 	public String querySODProductIdGet(@PathVariable("productid") Integer productid, Model model) {
 		return "operator/sodQuery";
 	}
 	
-	@PostMapping("/salesorderdetail/query/{productid}")
+	@PostMapping("/salesorderdetail/query/productid/{productid}")
 	public String querySODProductIdPost(@PathVariable("productid") Integer productid, Model model) {
 		if(productid!=null) {
 			model.addAttribute("salesorderdetails", bDelegate.sodFindByProductId(productid));
