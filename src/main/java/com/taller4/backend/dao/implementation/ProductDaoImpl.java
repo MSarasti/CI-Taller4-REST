@@ -69,7 +69,6 @@ public class ProductDaoImpl implements ProductDao {
 		return entityManager.createQuery(jpql, Product.class).setParameter("style", style).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<?> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate) {

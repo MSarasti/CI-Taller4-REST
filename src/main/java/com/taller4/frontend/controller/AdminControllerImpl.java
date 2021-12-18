@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.*;
 
 import com.taller4.backend.model.prod.*;
 import com.taller4.backend.model.validation.*;
-import com.taller4.frontend.businessdelegate.BusinessDelegate;
+import com.taller4.frontend.businessdelegate.*;
 
 @Controller
 public class AdminControllerImpl {
-	private BusinessDelegate bDelegate;
-	
 	@Autowired
+	private BusinessDelegate bDelegate;
+	/*@Autowired
+	private BusinessDelegateURL bDelegate;*/
+	
+	//@Autowired
 	public AdminControllerImpl(BusinessDelegate bDelegate) {
 		this.bDelegate = bDelegate;
 	}
@@ -141,8 +144,10 @@ public class AdminControllerImpl {
 				model.addAttribute("worder", workorder);
 				model.addAttribute("prods", bDelegate.prodFindAll());
 				return "admin/addWorkOrder";
-			}else 
+			}else {
+				workorder.setProduct(bDelegate.prodFindById(workorder.getPId()));
 				bDelegate.woSave(workorder);
+			}
 		}
 		return "redirect:/workorder";
 	}
@@ -162,6 +167,7 @@ public class AdminControllerImpl {
 				model.addAttribute("worders", bDelegate.woFindAll());
 				return "admin/addWorkOrderRouting";
 			}else {
+				workorderrouting.setWorkorder(bDelegate.woFindById(workorderrouting.getWId()));
 				WorkorderroutingPK worPK = new WorkorderroutingPK();
 				worPK.setWorkorderid(workorderrouting.getWorkorder().getWorkorderid());
 				worPK.setProductid(workorderrouting.getWorkorder().getProduct().getProductid());
@@ -218,6 +224,7 @@ public class AdminControllerImpl {
 				model.addAttribute("prods", bDelegate.prodFindAll());
 				return "admin/editWorkOrder";
 			}else {
+				workorder.setProduct(bDelegate.prodFindById(workorder.getPId()));
 				workorder.setWorkorderid(id);
 				bDelegate.woUpdate(workorder);
 			}
@@ -248,6 +255,7 @@ public class AdminControllerImpl {
 				model.addAttribute("worders", bDelegate.woFindAll());
 				return "admin/editWorkOrderRouting";
 			}else {
+				workorderrouting.setWorkorder(bDelegate.woFindById(workorderrouting.getWId()));
 				workorderrouting.setId(pk);
 				bDelegate.worUpdate(workorderrouting);
 			}
@@ -277,12 +285,12 @@ public class AdminControllerImpl {
 		return "redirect:/workorderrouting";
 	}
 	
-	@GetMapping("/product/get/productnumber/{pnum}")
+	@GetMapping("/product/query/{pnum}")
 	public String queryProductNumberGet(@PathVariable("pnum") String productnumber, Model model) {
 		return "admin/prodBaseQuery";
 	}
 	
-	@PostMapping("/product/get/productnumber/{pnum}")
+	@PostMapping("/product/query/{pnum}")
 	public String queryProductNumberPost(@PathVariable("pnum") String productnumber, Model model) {
 		if(!productnumber.isBlank()) {
 			ArrayList<Product> list = new ArrayList<>();
@@ -294,12 +302,12 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/product/get/style/{style}")
+	@GetMapping("/product/query/{style}")
 	public String queryStyleGet(@PathVariable("style") String style, Model model) {
 		return "admin/prodBaseQuery";
 	}
 	
-	@PostMapping("/product/get/style/{style}")
+	@PostMapping("/product/query/{style}")
 	public String queryStylePost(@PathVariable("style") String style, Model model) {
 		if(!style.isBlank()) {
 			model.addAttribute("products", bDelegate.prodFindByStyle(style));
@@ -308,13 +316,13 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/product/sellstartdate/to/sellenddate")
-	public String queryDateRangeGet(@RequestParam("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @RequestParam("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model) {
+	@GetMapping("/product/{sellstartdate}_{sellenddate}")
+	public String queryDateRangeGet(@PathVariable("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @PathVariable("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model) {
 		return "admin/prodDateRangeQuery";
 	}
 	
-	@PostMapping("/product/sellstartdate/to/sellenddate")
-	public String queryDateRangePost(@RequestParam("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @RequestParam("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model, @RequestParam(value = "action", required = true) String action) {
+	@PostMapping("/product/{sellstartdate}_{sellenddate}")
+	public String queryDateRangePost(@PathVariable("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @PathVariable("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(sellstartdate!=null && sellenddate!=null && sellstartdate.isBefore(sellenddate)) {
 			model.addAttribute("products", bDelegate.prodFindDateRange(sellstartdate, sellenddate));
 			return "admin/prodDateRangeQuery";
@@ -322,12 +330,12 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/workorder/get/startdate/")
+	@GetMapping("/workorder/query/startdate/")
 	public String queryWOStartDateGet(@RequestParam("startdate") LocalDate startdate, Model model) {
 		return "admin/woQuery";
 	}
 	
-	@PostMapping("/workorder/get/startdate")
+	@PostMapping("/workorder/query/startdate")
 	public String queryWOStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
 		if(startdate!=null) {
 			model.addAttribute("workorders", bDelegate.woFindByStartDate(startdate));
@@ -336,12 +344,12 @@ public class AdminControllerImpl {
 			return "redirect:/workorder";
 	}
 	
-	@GetMapping("/workorder/get/enddate/")
+	@GetMapping("/workorder/query/enddate/")
 	public String queryWOEndDateGet(@RequestParam("enddate") LocalDate enddate, Model model) {
 		return "admin/woQuery";
 	}
 	
-	@PostMapping("/workorder/get/enddate")
+	@PostMapping("/workorder/query/enddate")
 	public String queryWOEndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
 		if(enddate!=null) {
 			model.addAttribute("workorders", bDelegate.woFindByEndDate(enddate));
@@ -350,12 +358,12 @@ public class AdminControllerImpl {
 			return "redirect:/workorder";
 	}
 	
-	@GetMapping("/workorderrouting/get/startdate/")
+	@GetMapping("/workorderrouting/query/startdate/")
 	public String queryWORStartDateGet(@RequestParam("startdate") LocalDate startdate, Model model) {
 		return "admin/woQuery";
 	}
 	
-	@PostMapping("/workorderrouting/get/startdate")
+	@PostMapping("/workorderrouting/query/startdate")
 	public String queryWORStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
 		if(startdate!=null) {
 			model.addAttribute("workorderroutings", bDelegate.worFindByStartDate(startdate));
@@ -364,12 +372,12 @@ public class AdminControllerImpl {
 			return "redirect:/workorderrouting";
 	}
 	
-	@GetMapping("/workorderrouting/get/enddate/")
+	@GetMapping("/workorderrouting/query/enddate/")
 	public String queryWOREndDateGet(@RequestParam("enddate") LocalDate enddate, Model model) {
 		return "admin/worQuery";
 	}
 	
-	@PostMapping("/workorderrouting/get/enddate")
+	@PostMapping("/workorderrouting/query/enddate")
 	public String queryWOREndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
 		if(enddate!=null) {
 			model.addAttribute("workorderroutings", bDelegate.worFindByEndDate(enddate));

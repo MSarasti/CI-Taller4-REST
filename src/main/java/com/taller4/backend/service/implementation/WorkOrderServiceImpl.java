@@ -14,7 +14,8 @@ import com.taller4.backend.service.interfaces.*;
 
 @Service
 public class WorkOrderServiceImpl implements WorkOrderService {
-	
+	@Autowired
+	private ProductDaoImpl pDao;
 	@Autowired
 	private WorkOrderDaoImpl woDao;
 	
@@ -25,6 +26,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	@Override
 	@Transactional
 	public Workorder saveWorkOrder(Workorder w) {
+		//w.setProduct(pDao.findById(w.getPId()));
 		woDao.save(w);
 		return w;
 	}

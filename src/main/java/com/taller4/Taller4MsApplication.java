@@ -65,6 +65,7 @@ public class Taller4MsApplication {
 		
 		Product p1 = new Product();
 		p1.setName("Porkchop");
+		p1.setStyle("Vegan");
 		p1.setDaystomanufacture(360);
 		p1.setProductnumber("1");
 		p1.setSellstartdate(LocalDate.now());
@@ -75,6 +76,7 @@ public class Taller4MsApplication {
 		
 		Product p2 = new Product();
 		p2.setName("Beef");
+		p2.setStyle("Hamburger");
 		p2.setDaystomanufacture(360);
 		p2.setProductnumber("2");
 		p2.setSellstartdate(LocalDate.now());
@@ -83,8 +85,20 @@ public class Taller4MsApplication {
 		p2.setUnitmeasure1(um1);
 		p2.setUnitmeasure2(um2);
 		
+		Product p3 = new Product();
+		p3.setName("Patty");
+		p3.setStyle("Hamburger");
+		p3.setDaystomanufacture(125);
+		p3.setProductnumber("3");
+		p3.setSellstartdate(LocalDate.now());
+		p3.setSellenddate(LocalDate.now().plusWeeks(2));
+		p3.setProductsubcategory(psc);
+		p3.setUnitmeasure1(um1);
+		p3.setUnitmeasure2(um2);
+		
 		p1 = pService.saveProduct(p1, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
 		p2 = pService.saveProduct(p2, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
+		p3 = pService.saveProduct(p3, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
 		
 		Workorder wo1 = new Workorder();
 		wo1.setStartdate(LocalDate.now());

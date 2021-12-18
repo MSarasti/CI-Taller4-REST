@@ -17,20 +17,18 @@ import com.taller4.backend.model.person.*;
 import com.taller4.backend.model.person.UserApp.addValidator;
 import com.taller4.backend.model.person.UserApp.updateValidator;
 import com.taller4.backend.service.implementation.UserServiceImpl;
+import com.taller4.frontend.businessdelegate.BusinessDelegate;
 
 @Controller
 public class UserControllerImpl {
-	
-	UserServiceImpl userService;
-	
 	@Autowired
-	public UserControllerImpl(UserServiceImpl userService) {
-		this.userService = userService;
-	}
+	private BusinessDelegate bDelegate;
+	/*@Autowired
+	private BusinessDelegateURL bDelegate;*/
 	
 	@GetMapping("/users/")
 	public String indexUser(Model model) {
-		model.addAttribute("users", userService.findAll());
+		model.addAttribute("users", bDelegate.userFindAll());
 		return "users/index";
 	}
 
@@ -52,7 +50,7 @@ public class UserControllerImpl {
 	@GetMapping("/users/add")
 	public String addUser(Model model) {
 		model.addAttribute("user", new UserApp());
-		model.addAttribute("types", userService.getTypes());
+		model.addAttribute("types", bDelegate.userGetTypes());
 		return "users/add-user";
 	}
 	
@@ -61,29 +59,25 @@ public class UserControllerImpl {
 			@RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(br.hasErrors()) {
-				model.addAttribute("types", userService.getTypes());
+				model.addAttribute("types", bDelegate.userGetTypes());
 				return "users/add-user";
 			}
-			userService.save(user);
+			bDelegate.userSave(user);
 		}
 		return "redirect:/users/";
 	}
 	
 	@GetMapping("/users/del/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
-		UserApp user = userService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		userService.delete(user);
-		model.addAttribute("users", userService.findAll());
+		bDelegate.userDelete(id);
+		model.addAttribute("users", bDelegate.userFindAll());
 		return "users/index";
 	}
 	
 	@GetMapping("/users/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Optional<UserApp> user = userService.findById(id);
-		if (user.isEmpty())
-			throw new IllegalArgumentException("Invalid user Id:" + id);
-		model.addAttribute("user", user.get());
-		model.addAttribute("types", userService.getTypes());
+		model.addAttribute("user", bDelegate.userFindById(id));
+		model.addAttribute("types", bDelegate.userGetTypes());
 		return "users/update-user";
 	}
 
@@ -92,18 +86,18 @@ public class UserControllerImpl {
 			@RequestParam(value = "action", required = true) String action, @Validated(updateValidator.class) @ModelAttribute("user") UserApp user, BindingResult br, Model model) {
 		if (action != null && !action.equals("Cancel")) {
 			if(br.hasErrors()) {
-				model.addAttribute("types", userService.getTypes());
+				model.addAttribute("types", bDelegate.userGetTypes());
 				return "users/update-user";
 			}
 			String pass = user.getPassword();
 			String re = user.getRepeatPassword();
 			if((pass.length()>=8 && pass.equals(re))) {
-				userService.update(id, user);
+				bDelegate.userUpdate(user);
 			}else {
-				user.setPassword(userService.findById(id).get().getPassword());
-				userService.update(id, user);
+				user.setPassword(bDelegate.userFindById(id).getPassword());
+				bDelegate.userUpdate(user);
 			}
-			model.addAttribute("users", userService.findAll());
+			model.addAttribute("users", bDelegate.userFindAll());
 		}
 		return "redirect:/users/";
 	}

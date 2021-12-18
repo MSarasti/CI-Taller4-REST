@@ -34,6 +34,7 @@ public class UserRestController {
 		return userService.findAll();
 	}
 	
+	@GetMapping("/types")
 	public Iterable<UserType> getAllTypes() {
 		ArrayList<UserType> list = new ArrayList<>();
 		UserType[] t = userService.getTypes();

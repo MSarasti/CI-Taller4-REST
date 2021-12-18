@@ -19,9 +19,11 @@ import com.taller4.frontend.businessdelegate.*;
 
 @Controller
 public class OperatorControllerImpl {
-	private BusinessDelegate bDelegate;
-	
 	@Autowired
+	private BusinessDelegate bDelegate;
+	/*@Autowired
+	private BusinessDelegateURL bDelegate;*/
+	
 	public OperatorControllerImpl(BusinessDelegate bDelegate) {
 		this.bDelegate = bDelegate;
 	}
@@ -192,12 +194,12 @@ public class OperatorControllerImpl {
 		return "redirect:/salesorderdetail";
 	}
 	
-	@GetMapping("/specialoffer/get/{startdate}")
+	@GetMapping("/specialoffer/query/{startdate}")
 	public String querySOStartDateGet(@PathVariable("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate, Model model) {
 		return "operator/soQuery";
 	}
 	
-	@PostMapping("/specialoffer/get/{startdate}")
+	@PostMapping("/specialoffer/query/{startdate}")
 	public String querySOStartDatePost(@PathVariable("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate, Model model) {
 		if(startdate!=null) {
 			model.addAttribute("specialoffers", bDelegate.soFindStartDate(startdate));
@@ -207,12 +209,12 @@ public class OperatorControllerImpl {
 		
 	}
 	
-	@GetMapping("/specialoffer/get/{enddate}")
+	@GetMapping("/specialoffer/query/{enddate}")
 	public String querySOEndDateGet(@PathVariable("enddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enddate, Model model) {
 		return "operator/soQuery";
 	}
 	
-	@PostMapping("/specialoffer/get/{enddate}")
+	@PostMapping("/specialoffer/query/{enddate}")
 	public String querySOEndDatePost(@PathVariable("enddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enddate, Model model) {
 		if(enddate!=null) {
 			model.addAttribute("specialoffers", bDelegate.soFindEndDate(enddate));
@@ -221,12 +223,12 @@ public class OperatorControllerImpl {
 			return "redirect:/specialoffer";
 	}
 	
-	@GetMapping("/salesorderdetail/get/{productid}")
+	@GetMapping("/salesorderdetail/query/{productid}")
 	public String querySODProductIdGet(@PathVariable("productid") Integer productid, Model model) {
 		return "operator/sodQuery";
 	}
 	
-	@PostMapping("/salesorderdetail/get/{productid}")
+	@PostMapping("/salesorderdetail/query/{productid}")
 	public String querySODProductIdPost(@PathVariable("productid") Integer productid, Model model) {
 		if(productid!=null) {
 			model.addAttribute("salesorderdetails", bDelegate.sodFindByProductId(productid));
@@ -235,12 +237,12 @@ public class OperatorControllerImpl {
 			return "redirect:/salesorderdetail";
 	}
 	
-	@GetMapping("/salesorderdetail/get/SOP")
+	@GetMapping("/salesorderdetail/query/SOP")
 	public String querySODMoreSOPGet(Model model) {
 		return "operator/sodSOPQuery";
 	}
 	
-	@PostMapping("/salesorderdetail/get/SOP")
+	@PostMapping("/salesorderdetail/query/SOP")
 	public String querySODMoreSOPPost(Model model) {
 		model.addAttribute("sales", bDelegate.sodFindByMoreThanOneSOP());
 		return "operator/sodSOPQuery";
