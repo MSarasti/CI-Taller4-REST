@@ -316,12 +316,12 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/product/{sellstartdate}_{sellenddate}")
+	@GetMapping("/product/query/{sellstartdate}_{sellenddate}")
 	public String queryDateRangeGet(@PathVariable("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @PathVariable("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model) {
 		return "admin/prodDateRangeQuery";
 	}
 	
-	@PostMapping("/product/{sellstartdate}_{sellenddate}")
+	@PostMapping("/product/query/{sellstartdate}_{sellenddate}")
 	public String queryDateRangePost(@PathVariable("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @PathVariable("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(sellstartdate!=null && sellenddate!=null && sellstartdate.isBefore(sellenddate)) {
 			model.addAttribute("products", bDelegate.prodFindDateRange(sellstartdate, sellenddate));

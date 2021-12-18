@@ -55,13 +55,13 @@
 					<label for="startdate" class="col-form-label">Start Date</label> <input
 								type="date" th:name="startdate" class="form-control" id="startdate"
 								placeholder="Date"> 
-					<a th:href="@{/specialoffer/get/{startdate}(startdate=${startdate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given start date</a>	
+					<a th:href="@{/specialoffer/query/{startdate}(startdate=${startdate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given start date</a>	
 				</p>
 				<p>
 					<label for="enddate" class="col-form-label">End Date</label> <input
 								type="date" th:name="enddate" class="form-control" id="enddate"
 								placeholder="Style"> 
-					<a th:href="@{/specialoffer/get/{enddate}(enddate=${enddate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given end date</a>	
+					<a th:href="@{/specialoffer/query/{enddate}(enddate=${enddate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given end date</a>	
 				</p>
 				<p>
 					<a href="/operator/"><i class="fas fa-user-edit ml-2"></i> Go to Operator Menu</a>
