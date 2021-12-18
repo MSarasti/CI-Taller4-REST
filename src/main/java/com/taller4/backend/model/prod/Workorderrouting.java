@@ -2,8 +2,11 @@ package com.taller4.backend.model.prod;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import lombok.Data;
+
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 
 /**
@@ -11,6 +14,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Data
 @NamedQuery(name="Workorderrouting.findAll", query="SELECT w FROM Workorderrouting w")
 public class Workorderrouting implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,19 +24,19 @@ public class Workorderrouting implements Serializable {
 
 	private BigDecimal actualcost;
 
-	private Timestamp actualenddate;
+	private LocalDate actualenddate;
 
 	private BigDecimal actualresourcehrs;
 
-	private Timestamp actualstartdate;
+	private LocalDate actualstartdate;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private BigDecimal plannedcost;
 
-	private Timestamp scheduledenddate;
+	private LocalDate scheduledenddate;
 
-	private Timestamp scheduledstartdate;
+	private LocalDate scheduledstartdate;
 
 	//bi-directional many-to-one association to Location
 	@ManyToOne
@@ -66,11 +70,11 @@ public class Workorderrouting implements Serializable {
 		this.actualcost = actualcost;
 	}
 
-	public Timestamp getActualenddate() {
+	public LocalDate getActualenddate() {
 		return this.actualenddate;
 	}
 
-	public void setActualenddate(Timestamp actualenddate) {
+	public void setActualenddate(LocalDate actualenddate) {
 		this.actualenddate = actualenddate;
 	}
 
@@ -82,19 +86,19 @@ public class Workorderrouting implements Serializable {
 		this.actualresourcehrs = actualresourcehrs;
 	}
 
-	public Timestamp getActualstartdate() {
+	public LocalDate getActualstartdate() {
 		return this.actualstartdate;
 	}
 
-	public void setActualstartdate(Timestamp actualstartdate) {
+	public void setActualstartdate(LocalDate actualstartdate) {
 		this.actualstartdate = actualstartdate;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
@@ -106,19 +110,19 @@ public class Workorderrouting implements Serializable {
 		this.plannedcost = plannedcost;
 	}
 
-	public Timestamp getScheduledenddate() {
+	public LocalDate getScheduledenddate() {
 		return this.scheduledenddate;
 	}
 
-	public void setScheduledenddate(Timestamp scheduledenddate) {
+	public void setScheduledenddate(LocalDate scheduledenddate) {
 		this.scheduledenddate = scheduledenddate;
 	}
 
-	public Timestamp getScheduledstartdate() {
+	public LocalDate getScheduledstartdate() {
 		return this.scheduledstartdate;
 	}
 
-	public void setScheduledstartdate(Timestamp scheduledstartdate) {
+	public void setScheduledstartdate(LocalDate scheduledstartdate) {
 		this.scheduledstartdate = scheduledstartdate;
 	}
 

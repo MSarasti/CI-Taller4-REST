@@ -1,6 +1,7 @@
 package com.taller4.backend.dao.implementation;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.*;
@@ -51,14 +52,14 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
 
 	@Override
 	@Transactional
-	public List<Workorder> findByStartDate(Timestamp startdate) {
+	public List<Workorder> findByStartDate(LocalDate startdate) {
 		String jpql = "Select w from Workorder w WHERE w.startdate =: startdate";
 		return entityManager.createQuery(jpql, Workorder.class).setParameter("startdate", startdate).getResultList();
 	}
 
 	@Override
 	@Transactional
-	public List<Workorder> findByEndDate(Timestamp enddate) {
+	public List<Workorder> findByEndDate(LocalDate enddate) {
 		String jpql = "Select w from Workorder w WHERE w.enddate =: enddate";
 		return entityManager.createQuery(jpql, Workorder.class).setParameter("enddate", enddate).getResultList();
 	}

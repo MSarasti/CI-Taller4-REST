@@ -7,7 +7,7 @@ import com.taller4.backend.model.prod.*;
 import com.taller4.backend.service.interfaces.*;
 
 @RestController
-@RequestMapping("/productsubcategory")
+@RequestMapping("/api/productsubcategory")
 public class ProductSubcategoryRestController {
 	
 	private ProductService prodService;

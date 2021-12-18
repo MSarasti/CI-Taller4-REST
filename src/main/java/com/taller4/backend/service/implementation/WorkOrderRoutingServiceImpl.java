@@ -1,11 +1,11 @@
 package com.taller4.backend.service.implementation;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.taller4.backend.dao.implementation.*;
 import com.taller4.backend.model.prod.*;
@@ -22,17 +22,26 @@ public class WorkOrderRoutingServiceImpl implements WorkOrderRoutingService {
 	}
 
 	@Override
+	@Transactional
 	public Workorderrouting saveWorkOrderRouting(Workorderrouting w) {
 		wDao.save(w);
 		return w;
 	}
 
 	@Override
+	@Transactional
 	public Workorderrouting searchWorkOrderRouting(WorkorderroutingPK wId) {
 		return wDao.findById(wId);
 	}
+	
+	@Override
+	@Transactional
+	public Workorderrouting searchWorkOrderRouting(Integer wId, Integer pId, Integer op) {
+		return wDao.findById(wId, pId, op);
+	}
 
 	@Override
+	@Transactional
 	public Workorderrouting updateWorkOrderRouting(WorkorderroutingPK wId, Workorderrouting w) {
 		Workorderrouting toChange = wDao.findById(wId);
 		
@@ -48,22 +57,31 @@ public class WorkOrderRoutingServiceImpl implements WorkOrderRoutingService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteWorkOrderRouting(WorkorderroutingPK wId) {
 		wDao.delete(wDao.findById(wId));
 	}
 
+	@Override
+	@Transactional
 	public Iterable<Workorderrouting> findAll() {
 		return wDao.findAll();
 	}
 	
-	public Iterable<Workorderrouting> findByStartDate(Timestamp startdate) {
+	@Override
+	@Transactional
+	public Iterable<Workorderrouting> findByStartDate(LocalDate startdate) {
 		return wDao.findByStartDate(startdate);
 	}
 	
-	public Iterable<Workorderrouting> findByEndDate(Timestamp enddate) {
+	@Override
+	@Transactional
+	public Iterable<Workorderrouting> findByEndDate(LocalDate enddate) {
 		return wDao.findByEndDate(enddate);
 	}
 
+	@Override
+	@Transactional
 	public Workorderrouting findById(WorkorderroutingPK id) {
 		return wDao.findById(id);
 	}

@@ -1,6 +1,5 @@
 package com.taller4.frontend.businessdelegate;
 
-import java.sql.Timestamp;
 import java.time.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +49,10 @@ public class BusinessDelegate {
 	//User Methods
 	public Iterable<UserApp> userFindAll() {
 		return userRest.getAll();
+	}
+	
+	public Iterable<UserType> userGetTypes() {
+		return userRest.getAllTypes();
 	}
 	
 	public UserApp userFindById(long id) {
@@ -135,11 +138,11 @@ public class BusinessDelegate {
 		return woRest.getById(id);
 	}
 	
-	public Iterable<Workorder> woFindByStartDate(Timestamp startdate) {
+	public Iterable<Workorder> woFindByStartDate(LocalDate startdate) {
 		return woRest.getByStartDate(startdate);
 	}
 	
-	public Iterable<Workorder> woFindByEndDate(Timestamp enddate) {
+	public Iterable<Workorder> woFindByEndDate(LocalDate enddate) {
 		return woRest.getByEndDate(enddate);
 	}
 	
@@ -164,11 +167,11 @@ public class BusinessDelegate {
 		return worRest.getById(id);
 	}
 	
-	public Iterable<Workorderrouting> worFindByStartDate(Timestamp startdate) {
+	public Iterable<Workorderrouting> worFindByStartDate(LocalDate startdate) {
 		return worRest.getByStartDate(startdate);
 	}
 	
-	public Iterable<Workorderrouting> worFindByEndDate(Timestamp enddate) {
+	public Iterable<Workorderrouting> worFindByEndDate(LocalDate enddate) {
 		return worRest.getByEndDate(enddate);
 	}
 	
@@ -194,11 +197,11 @@ public class BusinessDelegate {
 		return soRest.getById(id);
 	}
 	
-	public Iterable<Specialoffer> soFindStartDate(Timestamp startdate) {
+	public Iterable<Specialoffer> soFindStartDate(LocalDate startdate) {
 		return soRest.getByStartDate(startdate);
 	}
 	
-	public Iterable<Specialoffer> soFindEndDate(Timestamp enddate) {
+	public Iterable<Specialoffer> soFindEndDate(LocalDate enddate) {
 		return soRest.getByEndDate(enddate);
 	}
 	

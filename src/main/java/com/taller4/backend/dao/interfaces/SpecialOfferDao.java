@@ -1,6 +1,7 @@
 package com.taller4.backend.dao.interfaces;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.taller4.backend.model.sales.*;
@@ -12,6 +13,6 @@ public interface SpecialOfferDao {
 	
 	List<Specialoffer> findAll();
 	Specialoffer findById(Integer id);
-	List<Specialoffer> findByStartDate(Timestamp startdate);	
-	List<Specialoffer> findByEndDate(Timestamp enddate);
+	List<Specialoffer> findByStartDate(LocalDate startdate);	
+	List<Specialoffer> findByEndDate(LocalDate enddate);
 }

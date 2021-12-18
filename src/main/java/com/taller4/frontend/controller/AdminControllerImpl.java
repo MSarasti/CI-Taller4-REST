@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.taller4.backend.model.prod.*;
 import com.taller4.backend.model.validation.*;
-import com.taller4.backend.service.implementation.*;
 import com.taller4.frontend.businessdelegate.BusinessDelegate;
 
 @Controller
@@ -226,22 +225,30 @@ public class AdminControllerImpl {
 		return "redirect:/workorder";
 	}
 	
-	@GetMapping("/workorderrouting/edit/{id}")
-	public String editWorkOrderRoutingGet(@PathVariable("id") WorkorderroutingPK id, Model model) {
-		model.addAttribute("woroute", bDelegate.worFindById(id));
+	@GetMapping("/workorderrouting/edit/{id1}_{id2}_{id3}")
+	public String editWorkOrderRoutingGet(@PathVariable("id1") Integer wId, @PathVariable("id2") Integer pId, @PathVariable("id3") Integer op, Model model) {
+		WorkorderroutingPK pk = new WorkorderroutingPK();
+		pk.setWorkorderid(wId);
+		pk.setProductid(pId);
+		pk.setOperationsequence(op);
+		model.addAttribute("woroute", bDelegate.worFindById(pk));
 		model.addAttribute("worders", bDelegate.woFindAll());
 		return "admin/editWorkOrderRouting";
 	}
 	
-	@PostMapping("/workorderrouting/edit/{id}")
-	public String editWorkOrderRoutingPost(@PathVariable("id") WorkorderroutingPK id, @ModelAttribute("woroute") Workorderrouting workorderrouting, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+	@PostMapping("/workorderrouting/edit/{id1}_{id2}_{id3}")
+	public String editWorkOrderRoutingPost(@PathVariable("id1") Integer wId, @PathVariable("id2") Integer pId, @PathVariable("id3") Integer op, @ModelAttribute("woroute") Workorderrouting workorderrouting, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(!action.equals("Cancel")) {
+			WorkorderroutingPK pk = new WorkorderroutingPK();
+			pk.setWorkorderid(wId);
+			pk.setProductid(pId);
+			pk.setOperationsequence(op);
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("woroute", bDelegate.worFindById(id));
+				model.addAttribute("woroute", bDelegate.worFindById(pk));
 				model.addAttribute("worders", bDelegate.woFindAll());
 				return "admin/editWorkOrderRouting";
 			}else {
-				workorderrouting.setId(id);
+				workorderrouting.setId(pk);
 				bDelegate.worUpdate(workorderrouting);
 			}
 		}
@@ -260,19 +267,23 @@ public class AdminControllerImpl {
 		return "redirect:/workorder";
 	}
 	
-	@GetMapping("/workorderrouting/delete/{id}")
-	public String deleteWorkOrder(@PathVariable("id") WorkorderroutingPK id, Model model) {
-		bDelegate.worDelete(id);
+	@GetMapping("/workorderrouting/delete/{id1}_{id2}_{id3}")
+	public String deleteWorkOrder(@PathVariable("id1") Integer wId, @PathVariable("id2") Integer pId, @PathVariable("id3") Integer op,  Model model) {
+		WorkorderroutingPK pk = new WorkorderroutingPK();
+		pk.setWorkorderid(wId);
+		pk.setProductid(pId);
+		pk.setOperationsequence(op);
+		bDelegate.worDelete(pk);
 		return "redirect:/workorderrouting";
 	}
 	
-	@GetMapping("/product/get/productnumber/")
-	public String queryProductNumberGet(@RequestParam("productnumber") String productnumber, Model model) {
+	@GetMapping("/product/get/productnumber/{pnum}")
+	public String queryProductNumberGet(@PathVariable("pnum") String productnumber, Model model) {
 		return "admin/prodBaseQuery";
 	}
 	
-	@PostMapping("/product/get/productnumber")
-	public String queryProductNumberPost(@RequestParam("productnumber") String productnumber, Model model) {
+	@PostMapping("/product/get/productnumber/{pnum}")
+	public String queryProductNumberPost(@PathVariable("pnum") String productnumber, Model model) {
 		if(!productnumber.isBlank()) {
 			ArrayList<Product> list = new ArrayList<>();
 			list.add(bDelegate.prodFindByProductNumber(productnumber));
@@ -283,13 +294,13 @@ public class AdminControllerImpl {
 			return "redirect:/product";
 	}
 	
-	@GetMapping("/product/get/style/")
-	public String queryStyleGet(@RequestParam("style") String style, Model model) {
+	@GetMapping("/product/get/style/{style}")
+	public String queryStyleGet(@PathVariable("style") String style, Model model) {
 		return "admin/prodBaseQuery";
 	}
 	
-	@PostMapping("/product/get/style")
-	public String queryStylePost(@RequestParam("style") String style, Model model) {
+	@PostMapping("/product/get/style/{style}")
+	public String queryStylePost(@PathVariable("style") String style, Model model) {
 		if(!style.isBlank()) {
 			model.addAttribute("products", bDelegate.prodFindByStyle(style));
 			return "admin/prodBaseQuery";
@@ -319,7 +330,7 @@ public class AdminControllerImpl {
 	@PostMapping("/workorder/get/startdate")
 	public String queryWOStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
 		if(startdate!=null) {
-			model.addAttribute("products", bDelegate.woFindByStartDate(Timestamp.valueOf(startdate.atStartOfDay())));
+			model.addAttribute("workorders", bDelegate.woFindByStartDate(startdate));
 			return "admin/woQuery";
 		}else
 			return "redirect:/workorder";
@@ -333,7 +344,7 @@ public class AdminControllerImpl {
 	@PostMapping("/workorder/get/enddate")
 	public String queryWOEndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
 		if(enddate!=null) {
-			model.addAttribute("workorders", bDelegate.woFindByEndDate(Timestamp.valueOf(enddate.atStartOfDay())));
+			model.addAttribute("workorders", bDelegate.woFindByEndDate(enddate));
 			return "admin/worQuery";
 		}else
 			return "redirect:/workorder";
@@ -347,7 +358,7 @@ public class AdminControllerImpl {
 	@PostMapping("/workorderrouting/get/startdate")
 	public String queryWORStartDatePost(@RequestParam("startdate") LocalDate startdate, Model model) {
 		if(startdate!=null) {
-			model.addAttribute("workorderroutings", bDelegate.worFindByStartDate(Timestamp.valueOf(startdate.atStartOfDay())));
+			model.addAttribute("workorderroutings", bDelegate.worFindByStartDate(startdate));
 			return "admin/worQuery";
 		}else
 			return "redirect:/workorderrouting";
@@ -361,7 +372,7 @@ public class AdminControllerImpl {
 	@PostMapping("/workorderrouting/get/enddate")
 	public String queryWOREndDatePost(@RequestParam("enddate") LocalDate enddate, Model model) {
 		if(enddate!=null) {
-			model.addAttribute("workorderroutings", bDelegate.worFindByEndDate(Timestamp.valueOf(enddate.atStartOfDay())));
+			model.addAttribute("workorderroutings", bDelegate.worFindByEndDate(enddate));
 			return "admin/worQuery";
 		}else
 			return "redirect:/workorderrouting";

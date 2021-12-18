@@ -7,7 +7,7 @@ import com.taller4.backend.model.prod.*;
 import com.taller4.backend.service.interfaces.*;
 
 @RestController
-@RequestMapping("/unitmeasure")
+@RequestMapping("/api/unitmeasure")
 public class UnitMeasureRestController {
 	
 	private ProductService prodService;

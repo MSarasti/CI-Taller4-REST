@@ -4,6 +4,7 @@ import com.taller4.backend.model.sales.*;
 
 public interface SalesorderdetailService {
 	public Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, Integer pId, Integer soId);
+	Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, SpecialofferproductPK sopId);
 	public Salesorderdetail searchSalesOrderDetail(Integer sdId);
 	public Salesorderdetail updateSalesOrderDetail(Integer sdId, Salesorderdetail sd);
 	public void deleteSalesOrderDetail(Integer sdId);
@@ -11,4 +12,5 @@ public interface SalesorderdetailService {
 	public Iterable<Salesorderdetail> findAll();
 	public Iterable<Salesorderdetail> findByProductId(Integer pId);
 	public Iterable<?> findOrderDetailByProductWithMoreThanOneSOP();
+	
 }

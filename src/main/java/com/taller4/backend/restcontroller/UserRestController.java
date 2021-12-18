@@ -34,12 +34,19 @@ public class UserRestController {
 		return userService.findAll();
 	}
 	
-	@GetMapping
+	public Iterable<UserType> getAllTypes() {
+		ArrayList<UserType> list = new ArrayList<>();
+		UserType[] t = userService.getTypes();
+		for(int i = 0; i<t.length; i++) {
+			list.add(t[i]);
+		}
+		return list;
+	}
+	
 	public Iterable<UserApp> getAllAdmins() {
 		return userService.findAllAdmins();
 	}
 	
-	@GetMapping
 	public Iterable<UserApp> getAllOperators() {
 		return userService.findAllOperators();
 	}

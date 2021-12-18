@@ -56,7 +56,6 @@ public class SalesOrderDetailDaoImpl implements SalesOrderDetailDao {
 		return entityManager.createQuery(jpql, Salesorderdetail.class).setParameter("pId", pId).getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<?> findOrderDetailByProductWithMoreThanOneSOP() {

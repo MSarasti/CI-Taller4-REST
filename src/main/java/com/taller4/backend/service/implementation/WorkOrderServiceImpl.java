@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.taller4.backend.dao.implementation.*;
 import com.taller4.backend.model.prod.*;
@@ -22,17 +23,20 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	}
 
 	@Override
+	@Transactional
 	public Workorder saveWorkOrder(Workorder w) {
 		woDao.save(w);
 		return w;
 	}
 
 	@Override
+	@Transactional
 	public Workorder searchWorkOrder(Integer wId) {
 		return woDao.findById(wId);
 	}
 
 	@Override
+	@Transactional
 	public Workorder updateWorkOrder(Integer wId, Workorder w) {
 		Workorder toChange = woDao.findById(wId);
 		
@@ -48,22 +52,31 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteWorkOrder(Integer wId) {
 		woDao.delete(woDao.findById(wId));
 	}
 
+	@Override
+	@Transactional
 	public Iterable<Workorder> findAll() {
 		return woDao.findAll();
 	}
 	
-	public Iterable<Workorder> findByStartDate(Timestamp startdate) {
+	@Override
+	@Transactional
+	public Iterable<Workorder> findByStartDate(LocalDate startdate) {
 		return woDao.findByStartDate(startdate);
 	}
 	
-	public Iterable<Workorder> findByEndDate(Timestamp enddate) {
+	@Override
+	@Transactional
+	public Iterable<Workorder> findByEndDate(LocalDate enddate) {
 		return woDao.findByEndDate(enddate);
 	}
 
+	@Override
+	@Transactional
 	public Workorder findById(Integer id) {
 		return woDao.findById(id);
 	}

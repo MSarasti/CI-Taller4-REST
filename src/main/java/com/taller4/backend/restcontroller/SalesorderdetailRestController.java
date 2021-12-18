@@ -7,7 +7,7 @@ import com.taller4.backend.model.sales.*;
 import com.taller4.backend.service.interfaces.*;
 
 @RestController
-@RequestMapping("/salesorderdetail")
+@RequestMapping("/api/salesorderdetail")
 public class SalesorderdetailRestController {
 	
 	private SalesorderdetailService sodService;

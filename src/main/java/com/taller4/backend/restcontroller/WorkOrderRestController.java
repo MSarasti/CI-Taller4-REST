@@ -1,6 +1,7 @@
 package com.taller4.backend.restcontroller;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import com.taller4.backend.model.prod.*;
 import com.taller4.backend.service.interfaces.*;
 
 @RestController
-@RequestMapping("/workorder")
+@RequestMapping("/api/workorder")
 public class WorkOrderRestController {
 	
 	private WorkOrderService woService;
@@ -41,12 +42,12 @@ public class WorkOrderRestController {
 	}
 	
 	@GetMapping("/get/startdate")
-	public Iterable<Workorder> getByStartDate(@RequestParam("startdate") Timestamp startdate) {
+	public Iterable<Workorder> getByStartDate(@RequestParam("startdate") LocalDate startdate) {
 		return woService.findByStartDate(startdate);
 	}
 	
 	@GetMapping("/get/enddate")
-	public Iterable<Workorder> getByEndDate(@RequestParam("enddate") Timestamp enddate) {
+	public Iterable<Workorder> getByEndDate(@RequestParam("enddate") LocalDate enddate) {
 		return woService.findByEndDate(enddate);
 	}
 	

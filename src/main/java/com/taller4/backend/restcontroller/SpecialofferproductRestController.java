@@ -11,7 +11,7 @@ import com.taller4.backend.model.sales.*;
 import com.taller4.backend.service.interfaces.*;
 
 @RestController
-@RequestMapping("/specialofferproduct")
+@RequestMapping("/api/specialofferproduct")
 public class SpecialofferproductRestController {
 	
 	private SpecialofferproductService sopService;

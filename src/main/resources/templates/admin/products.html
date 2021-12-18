@@ -67,13 +67,13 @@
 					<label for="productnumber" class="col-form-label">Product Number</label> <input
 								type="text" th:name="productnumber" class="form-control" id="productnumber"
 								placeholder="Number"> 
-					<a th:href="@{/product/get/productnumber}" class="btn btn-primary"><i class="fa fa-search"></i>Search for a product with a given product number</a>	
+					<a th:href="@{/product/get/productnumber/{pnum}(pnum=${productnumber})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for a product with a given product number</a>	
 				</p>
 				<p>
 					<label for="style" class="col-form-label">Style</label> <input
 								type="text" th:name="style" class="form-control" id="style"
 								placeholder="Style"> 
-					<a th:href="@{/product/get/style}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
+					<a th:href="@{/product/get/style/{style}(style=${style}}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
 				</p>
 				<p>
 					<label for="pStartQuery" class="col-form-label">From</label> <input

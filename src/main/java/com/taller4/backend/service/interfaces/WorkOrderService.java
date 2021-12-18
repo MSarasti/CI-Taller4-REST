@@ -1,6 +1,7 @@
 package com.taller4.backend.service.interfaces;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import com.taller4.backend.model.prod.*;
 
@@ -11,6 +12,6 @@ public interface WorkOrderService {
 	public void deleteWorkOrder(Integer wId);
 	public Workorder findById(Integer wId);
 	public Iterable<Workorder> findAll();
-	public Iterable<Workorder> findByStartDate(Timestamp startdate);
-	public Iterable<Workorder> findByEndDate(Timestamp enddate);
+	public Iterable<Workorder> findByStartDate(LocalDate startdate);
+	public Iterable<Workorder> findByEndDate(LocalDate enddate);
 }

@@ -1,16 +1,13 @@
 package com.taller4;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.*;
 
 import com.taller4.backend.dao.implementation.*;
 import com.taller4.backend.model.person.*;
@@ -21,7 +18,7 @@ import com.taller4.backend.service.implementation.*;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"com.taller4.backend.security","com.taller4.backend.model"})
-@ComponentScan(basePackages = {"com.taller4.backend.security","com.taller4.backend.repository","com.taller4.backend.dao.implementation","com.taller4.backend.service.implementation","com.taller4.backend.controller"})
+@ComponentScan(basePackages = {"com.taller4.backend.security","com.taller4.backend.repository","com.taller4.backend.dao.implementation","com.taller4.backend.service.implementation","com.taller4.backend.restcontroller","com.taller4.frontend.controller","com.taller4.frontend.businessdelegate"})
 public class Taller4MsApplication {
 
 	public static void main(String[] args) {
@@ -61,10 +58,10 @@ public class Taller4MsApplication {
 		Unitmeasure um2 = new Unitmeasure();
 		um2.setName("pound");
 		
-		pService.saveProductCategory(pc);
-		pService.saveProductSubcategory(psc);
-		pService.saveUnitmeasure(um1);
-		pService.saveUnitmeasure(um2);
+		pc = pService.saveProductCategory(pc);
+		psc = pService.saveProductSubcategory(psc);
+		um1 = pService.saveUnitmeasure(um1);
+		um2 = pService.saveUnitmeasure(um2);
 		
 		Product p1 = new Product();
 		p1.setName("Porkchop");
@@ -86,21 +83,27 @@ public class Taller4MsApplication {
 		p2.setUnitmeasure1(um1);
 		p2.setUnitmeasure2(um2);
 		
+		p1 = pService.saveProduct(p1, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
+		p2 = pService.saveProduct(p2, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
+		
 		Workorder wo1 = new Workorder();
-		wo1.setStartdate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
-		wo1.setEnddate(Timestamp.valueOf(LocalDate.now().plusWeeks(2).atStartOfDay()));
-		wo1.setModifieddate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
-		wo1.setDuedate(Timestamp.valueOf(LocalDate.now().plusWeeks(1).atStartOfDay()));
+		wo1.setStartdate(LocalDate.now());
+		wo1.setEnddate(LocalDate.now().plusWeeks(2));
+		wo1.setModifieddate(LocalDate.now());
+		wo1.setDuedate(LocalDate.now().plusWeeks(1));
 		wo1.setProduct(p1);
 		wo1.setOrderqty(2);
 		
 		Workorder wo2 = new Workorder();
-		wo2.setStartdate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
-		wo2.setEnddate(Timestamp.valueOf(LocalDate.now().plusWeeks(3).atStartOfDay()));
-		wo2.setModifieddate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
-		wo2.setDuedate(Timestamp.valueOf(LocalDate.now().plusWeeks(2).atStartOfDay()));
+		wo2.setStartdate(LocalDate.now());
+		wo2.setEnddate(LocalDate.now().plusWeeks(3));
+		wo2.setModifieddate(LocalDate.now());
+		wo2.setDuedate(LocalDate.now().plusWeeks(2));
 		wo2.setProduct(p2);
 		wo2.setOrderqty(3);
+		
+		wo1 = woService.saveWorkOrder(wo1);
+		wo2 = woService.saveWorkOrder(wo2);
 		
 		Workorderrouting wor1 = new Workorderrouting();
 		WorkorderroutingPK worPK = new WorkorderroutingPK();
@@ -108,25 +111,21 @@ public class Taller4MsApplication {
 		worPK.setWorkorderid(wo1.getWorkorderid());
 		worPK.setOperationsequence(1);
 		wor1.setId(worPK);
-		wor1.setScheduledstartdate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
-		wor1.setActualstartdate(Timestamp.valueOf(LocalDate.now().plusDays(2).atStartOfDay()));
-		wor1.setScheduledenddate(Timestamp.valueOf(LocalDate.now().plusWeeks(2).atStartOfDay()));
-		wor1.setActualenddate(Timestamp.valueOf(LocalDate.now().plusWeeks(3).atStartOfDay()));
-		wor1.setModifieddate(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+		wor1.setScheduledstartdate(LocalDate.now());
+		wor1.setActualstartdate(LocalDate.now().plusDays(2));
+		wor1.setScheduledenddate(LocalDate.now().plusWeeks(2));
+		wor1.setActualenddate(LocalDate.now().plusWeeks(3));
+		wor1.setModifieddate(LocalDate.now());
 		wor1.setWorkorder(wo1);
 		
-		pService.saveProduct(p1, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
-		pService.saveProduct(p2, pc.getProductcategoryid(), psc.getProductsubcategoryid(), um1.getUnitmeasurecode(), um2.getUnitmeasurecode());
-		
-		woService.saveWorkOrder(wo1);
-		woService.saveWorkOrder(wo2);
-		
-		worService.saveWorkOrderRouting(wor1);
+		wor1 = worService.saveWorkOrderRouting(wor1);
 		
 		Specialoffer so = new Specialoffer();
 		//so.setSpecialofferid(1);
 		so.setCategory("Cat 1");
 		so.setModifieddate(LocalDate.now());
+		
+		so = soService.saveSpecialOffer(so);
 		//System.out.println("Special offer ID = "+so.getSpecialofferid());
 		
 		Specialofferproduct sop = new Specialofferproduct();
@@ -138,14 +137,14 @@ public class Taller4MsApplication {
 		sop.setSpecialoffer(so);
 		so.addSpecialofferproduct(sop);
 		
+		sop = sopService.saveSpecialOfferProduct(sop, p1.getProductid(), so.getSpecialofferid());
+		
 		Salesorderdetail sod = new Salesorderdetail();
 		sod.setUnitprice(BigDecimal.valueOf(0.5));
 		sod.setUnitpricediscount(BigDecimal.ZERO);
 		sod.setSpecialofferproduct(sop);
 		sop.addSalesorderdetail(sod);
 		
-		soService.saveSpecialOffer(so);
-		sopService.saveSpecialOfferProduct(sop, p1.getProductid(), so.getSpecialofferid());
 		sodService.saveSalesOrderDetail(sod, sopPK);
 	}
 	/*

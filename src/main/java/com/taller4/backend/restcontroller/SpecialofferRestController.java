@@ -11,7 +11,7 @@ import com.taller4.backend.model.sales.*;
 import com.taller4.backend.service.interfaces.*;
 
 @RestController
-@RequestMapping("/specialoffer")
+@RequestMapping("/api/specialoffer")
 public class SpecialofferRestController {
 	
 	private SpecialofferService soService;
@@ -42,12 +42,12 @@ public class SpecialofferRestController {
 	}
 	
 	@GetMapping("/get/{startdate}")
-	public Iterable<Specialoffer> getByStartDate(@PathVariable("startdate") Timestamp startdate) {
+	public Iterable<Specialoffer> getByStartDate(@PathVariable("startdate") LocalDate startdate) {
 		return soService.findByStartDate(startdate);
 	}
 	
 	@GetMapping("/get/{enddate}")
-	public Iterable<Specialoffer> getByEndDate(@PathVariable("enddate") Timestamp enddate) {
+	public Iterable<Specialoffer> getByEndDate(@PathVariable("enddate") LocalDate enddate) {
 		return soService.findByEndDate(enddate);
 	}
 	
