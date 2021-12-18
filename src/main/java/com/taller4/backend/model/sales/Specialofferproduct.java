@@ -17,6 +17,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.taller4.backend.model.validation.*;
 
 /**
@@ -38,6 +39,7 @@ public class Specialofferproduct implements Serializable {
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Salesorderdetail
+	@JsonIgnore
 	@OneToMany(mappedBy = "specialofferproduct")
 	private List<Salesorderdetail> salesorderdetails;
 

@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.*;
 import org.springframework.context.annotation.*;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.taller4.backend.dao.implementation.*;
 import com.taller4.backend.model.person.*;
@@ -17,6 +18,7 @@ import com.taller4.backend.repository.*;
 import com.taller4.backend.service.implementation.*;
 
 @SpringBootApplication
+@EnableJpaRepositories("com.taller4.backend.repository")
 @EntityScan(basePackages = {"com.taller4.backend.security","com.taller4.backend.model"})
 @ComponentScan(basePackages = {"com.taller4.backend.security","com.taller4.backend.repository","com.taller4.backend.dao.implementation","com.taller4.backend.service.implementation","com.taller4.backend.restcontroller","com.taller4.frontend.controller","com.taller4.frontend.businessdelegate"})
 public class Taller4MsApplication {

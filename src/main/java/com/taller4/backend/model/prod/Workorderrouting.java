@@ -3,6 +3,8 @@ package com.taller4.backend.model.prod;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -39,6 +41,7 @@ public class Workorderrouting implements Serializable {
 	private LocalDate scheduledstartdate;
 
 	//bi-directional many-to-one association to Location
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="locationid", insertable=false, updatable=false)
 	private Location location;

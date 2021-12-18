@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.taller4.backend.model.validation.*;
 
 import lombok.Data;
@@ -44,6 +45,7 @@ public class Productsubcategory implements Serializable {
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Product
+	@JsonIgnore
 	@OneToMany(mappedBy = "productsubcategory")
 	private List<Product> products;
 

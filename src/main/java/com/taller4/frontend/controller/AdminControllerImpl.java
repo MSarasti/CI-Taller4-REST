@@ -18,15 +18,10 @@ import com.taller4.frontend.businessdelegate.*;
 
 @Controller
 public class AdminControllerImpl {
-	@Autowired
-	private BusinessDelegate bDelegate;
 	/*@Autowired
-	private BusinessDelegateURL bDelegate;*/
-	
-	//@Autowired
-	public AdminControllerImpl(BusinessDelegate bDelegate) {
-		this.bDelegate = bDelegate;
-	}
+	private BusinessDelegate bDelegate;*/
+	@Autowired
+	private BusinessDelegateURL bDelegate;
 	
 	@GetMapping("/admin/")
 	public String indexAdmin(Model model) {
@@ -124,8 +119,9 @@ public class AdminControllerImpl {
 				model.addAttribute("subs", bDelegate.pSubFindAll());
 				model.addAttribute("units", bDelegate.umFindAll());
 				return "admin/addProduct";
-			}else 
+			}else {
 				bDelegate.prodSave(product);
+			}
 		}
 		return "redirect:/product";
 	}

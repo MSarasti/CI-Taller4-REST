@@ -19,15 +19,11 @@ import com.taller4.frontend.businessdelegate.*;
 
 @Controller
 public class OperatorControllerImpl {
-	@Autowired
-	private BusinessDelegate bDelegate;
 	/*@Autowired
-	private BusinessDelegateURL bDelegate;*/
+	private BusinessDelegate bDelegate;*/
+	@Autowired
+	private BusinessDelegateURL bDelegate;
 	
-	public OperatorControllerImpl(BusinessDelegate bDelegate) {
-		this.bDelegate = bDelegate;
-	}
-
 	@GetMapping("/operator/")
 	public String indexOperator(Model model) {
 		return "operator/index";

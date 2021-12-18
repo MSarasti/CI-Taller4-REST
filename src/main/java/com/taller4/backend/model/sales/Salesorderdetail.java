@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.taller4.backend.model.validation.*;
 
 import lombok.Data;

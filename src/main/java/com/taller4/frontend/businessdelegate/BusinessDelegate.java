@@ -51,7 +51,7 @@ public class BusinessDelegate {
 		return userRest.getAll();
 	}
 	
-	public Iterable<UserType> userGetTypes() {
+	public Iterable<UserType> userFindAllTypes() {
 		return userRest.getAllTypes();
 	}
 	

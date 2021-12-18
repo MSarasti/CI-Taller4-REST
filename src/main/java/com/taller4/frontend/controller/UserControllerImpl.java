@@ -17,14 +17,14 @@ import com.taller4.backend.model.person.*;
 import com.taller4.backend.model.person.UserApp.addValidator;
 import com.taller4.backend.model.person.UserApp.updateValidator;
 import com.taller4.backend.service.implementation.UserServiceImpl;
-import com.taller4.frontend.businessdelegate.BusinessDelegate;
+import com.taller4.frontend.businessdelegate.*;
 
 @Controller
 public class UserControllerImpl {
-	@Autowired
-	private BusinessDelegate bDelegate;
 	/*@Autowired
-	private BusinessDelegateURL bDelegate;*/
+	private BusinessDelegate bDelegate;*/
+	@Autowired
+	private BusinessDelegateURL bDelegate;
 	
 	@GetMapping("/users/")
 	public String indexUser(Model model) {
@@ -50,7 +50,7 @@ public class UserControllerImpl {
 	@GetMapping("/users/add")
 	public String addUser(Model model) {
 		model.addAttribute("user", new UserApp());
-		model.addAttribute("types", bDelegate.userGetTypes());
+		model.addAttribute("types", bDelegate.userFindAllTypes());
 		return "users/add-user";
 	}
 	
@@ -59,7 +59,7 @@ public class UserControllerImpl {
 			@RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(br.hasErrors()) {
-				model.addAttribute("types", bDelegate.userGetTypes());
+				model.addAttribute("types", bDelegate.userFindAllTypes());
 				return "users/add-user";
 			}
 			bDelegate.userSave(user);
@@ -77,7 +77,7 @@ public class UserControllerImpl {
 	@GetMapping("/users/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		model.addAttribute("user", bDelegate.userFindById(id));
-		model.addAttribute("types", bDelegate.userGetTypes());
+		model.addAttribute("types", bDelegate.userFindAllTypes());
 		return "users/update-user";
 	}
 
@@ -86,7 +86,7 @@ public class UserControllerImpl {
 			@RequestParam(value = "action", required = true) String action, @Validated(updateValidator.class) @ModelAttribute("user") UserApp user, BindingResult br, Model model) {
 		if (action != null && !action.equals("Cancel")) {
 			if(br.hasErrors()) {
-				model.addAttribute("types", bDelegate.userGetTypes());
+				model.addAttribute("types", bDelegate.userFindAllTypes());
 				return "users/update-user";
 			}
 			String pass = user.getPassword();

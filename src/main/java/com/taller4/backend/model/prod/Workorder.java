@@ -6,6 +6,8 @@ import javax.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -54,11 +56,13 @@ public class Workorder implements Serializable {
 	private Product product;
 
 	//bi-directional many-to-one association to Scrapreason
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="scrapreasonid")
 	private Scrapreason scrapreason;
 
 	//bi-directional many-to-one association to Workorderrouting
+	@JsonIgnore
 	@OneToMany(mappedBy="workorder")
 	private List<Workorderrouting> workorderroutings;
 	

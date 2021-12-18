@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.taller4.backend.model.validation.*;
 
 import lombok.Data;
@@ -39,14 +40,17 @@ public class Unitmeasure implements Serializable {
 	private String name;
 
 	// bi-directional many-to-one association to Billofmaterial
+	@JsonIgnore
 	@OneToMany(mappedBy = "unitmeasure")
 	private List<Billofmaterial> billofmaterials;
 
 	// bi-directional many-to-one association to Product
+	@JsonIgnore
 	@OneToMany(mappedBy = "unitmeasure1")
 	private List<Product> products1;
 
 	// bi-directional many-to-one association to Product
+	@JsonIgnore
 	@OneToMany(mappedBy = "unitmeasure2")
 	private List<Product> products2;
 

@@ -17,7 +17,7 @@ import lombok.*;
 
 @Component
 public class BusinessDelegateURL {
-	public final static String URL = "http://localhost:8081/";
+	public final static String URL = "http://localhost:8081/api/";
 	public final static String USERS_URL = URL + "users/";
 	public final static String ADMIN_URL = URL + "admin/";
 	public final static String OP_URL = URL + "operator/";
@@ -50,7 +50,7 @@ public class BusinessDelegateURL {
 		return restTemplate.getForObject(USERS_URL, Iterable.class);
 	}
 	
-	public UserApp userFindById(Integer id) {
+	public UserApp userFindById(long id) {
 		return restTemplate.getForObject(USERS_URL+id, UserApp.class);
 	}
 	
@@ -66,8 +66,8 @@ public class BusinessDelegateURL {
 		restTemplate.put(USERS_URL, user, UserApp.class);
 	}
 	
-	public void userDelete(UserApp user) {
-		restTemplate.delete(USERS_URL+user.getId());
+	public void userDelete(long id) {
+		restTemplate.delete(USERS_URL+id);
 	}
 	
 	//Admin Methods
@@ -96,11 +96,11 @@ public class BusinessDelegateURL {
 	}
 	
 	//Product
-	public Iterable<Product> productFindAll() {
+	public Iterable<Product> prodFindAll() {
 		return restTemplate.getForObject(PROD_URL, Iterable.class);
 	}
 	
-	public Product productFindById(Integer id) {
+	public Product prodFindById(Integer id) {
 		return restTemplate.getForObject(PROD_URL+id, Product.class);
 	}
 	
@@ -116,16 +116,16 @@ public class BusinessDelegateURL {
 		return restTemplate.getForObject(PROD_URL+sellstartdate+"/to/"+sellenddate, Iterable.class);
 	}
 	
-	public Product productSave(Product product) {
+	public Product prodSave(Product product) {
 		return restTemplate.postForObject(PROD_URL, new HttpEntity<Product>(product), Product.class);
 	}
 	
-	public void productUpdate(Product product) {
+	public void prodUpdate(Product product) {
 		restTemplate.put(PROD_URL, product, Product.class);
 	}
 	
-	public void productDelete(Product product) {
-		restTemplate.delete(PROD_URL+product.getProductid());
+	public void prodDelete(Integer id) {
+		restTemplate.delete(PROD_URL+id);
 	}
 	
 	//Workorder
